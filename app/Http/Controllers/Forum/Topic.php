@@ -9,9 +9,23 @@ use App\Http\Requests\UpdateTopic;
 use Illuminate\Http\Request;
 use App\Models\Topic as ModelTopic;
 use Carbon\Carbon;
+use App\Models\User;
 
 class Topic extends Controller
 {
+    public function all()
+    {
+        $topics = [];
+
+        foreach(User::all() as $user) {
+            foreach($user->topics->toArray() as $topic) {
+                $topics[] = $topic;
+            }
+        }
+
+        return view('topic-list', ['topics' => $topics]);
+    }
+
     public function get(int $id)
     {
         $topic = ModelTopic::find($id);

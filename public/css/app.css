@@ -10271,3 +10271,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@media screen and (max-width: 992px) {
+  .home-main-section__element {
+    width: 100% !important;
+  }
+}

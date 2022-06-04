@@ -12,18 +12,7 @@ use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     public function forum() { /* Przenieś do HomeController */
-        $topics = [];
-
-        foreach(User::all() as $user) {
-            foreach($user->topics->toArray() as $topic) {
-                $topics[] = $topic;
-            }
-        }
-
-        /* dump(
-            User::first()->topics,
-            Topic::first()->topicComments,
-        ); */
-        return view('home', ['topics' => $topics]);
+      
+        return view('home');
     }
 }

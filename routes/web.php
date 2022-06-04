@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\Forum\Controller@forum');
 
+Route::get('/', 'App\Http\Controllers\Forum\Topic@all');
+
 Route::group([
     'namespace' => 'App\Http\Controllers\Forum',
     'prefix' => 'topic'
