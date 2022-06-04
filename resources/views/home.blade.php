@@ -10,8 +10,15 @@
 </head>
 
 <body>
-    <script src="{{ asset('js/app.js') }}"></script>
 
+    @foreach ($topics as $topic)
+        <a href="{{ route( 'topic', [ 'id' => $topic['id'] ]) }}">
+            {{ $topic['name'] }}
+        </a>
+        <br>
+    @endforeach
+
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>
