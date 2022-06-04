@@ -21,6 +21,9 @@
         <td>
             , {{ $topic->author->name }}
         </td>
+        <td>
+            <a href="{{ route('topic.edit', ['id' => $topic['id'] ]) }}">EDYTUJ</a>
+        </td>
     </tr>
 </table>
 

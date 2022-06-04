@@ -15,4 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\Forum\Controller@forum');
 
-Route::get('/topic/{id}', 'App\Http\Controllers\Forum\Topic@get')->name('topic');
+Route::group([
+    'namespace' => 'App\Http\Controllers\Forum',
+    'prefix' => 'topic'
+], function() {
+    Route::get('{id}/get', 'Topic@get')->name('topic.get');
+
+    Route::get('{id}/edit', 'Topic@edit')->name('topic.edit');
+
+    Route::post('update', 'Topic@update')->name('topic.update');
+});
+
+

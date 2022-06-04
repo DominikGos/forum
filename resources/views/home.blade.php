@@ -12,7 +12,7 @@
 <body>
 
     @foreach ($topics as $topic)
-        <a href="{{ route( 'topic', [ 'id' => $topic['id'] ]) }}">
+        <a href="{{ route( 'topic.get', [ 'id' => $topic['id'] ]) }}">
             {{ $topic['name'] }}
         </a>
         <br>
