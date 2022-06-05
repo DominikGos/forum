@@ -13,38 +13,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', 'App\Http\Controllers\Forum\Topic@list')->name('topic.list');
-
-Route::view('/profile', 'profile')->name('profile');
-
-Route::view('/login', 'authentication.login')->name('login');
-
-Route::view('/register', 'authentication.register')->name('register');
-
+//
 Route::group([
-    'namespace' => 'App\Http\Controllers\Forum',
-    'prefix' => 'topic'
+    'namespace' => 'App\Http\Controllers',
+    'middleware' => 'auth.basic'
 ], function() {
-    Route::get('{id}/get', 'Topic@get')->name('topic.get');
 
-    Route::get('{id}/edit', 'Topic@edit')->name('topic.edit');
+    Route::get('/', 'Forum\Topic@list')->name('topic.list');
 
-    Route::post('update', 'Topic@update')->name('topic.update');
+    Route::view('/profile', 'profile')->name('profile');
 
-    Route::get('create', 'Topic@create')->name('topic.create');
+    Route::group([
+        'namespace' => 'Forum',
+        'prefix' => 'topic'
+    ], function() {
+        Route::get('{id}/get', 'Topic@get')->name('topic.get');
 
-    Route::post('create', 'Topic@store')->name('topic.store');
+        Route::get('{id}/edit', 'Topic@edit')->name('topic.edit');
+
+        Route::post('update', 'Topic@update')->name('topic.update');
+
+        Route::get('create', 'Topic@create')->name('topic.create');
+
+        Route::post('create', 'Topic@store')->name('topic.store');
+
+    });
+
+    Route::group([
+        'namespace' => 'Forum',
+        'prefix' => 'topic-comment'
+    ], function() {
+
+        Route::post('create', 'TopicComment@store')->name('topic-comment.store');
+
+    });
 
 });
 
-Route::group([
-    'namespace' => 'App\Http\Controllers\Forum',
-    'prefix' => 'topic-comment'
-], function() {
 
-    Route::post('create', 'TopicComment@store')->name('topic-comment.store');
+Route::get('/login', 'App\Http\Controllers\Authentication\LoginController@showForm')->name('show.login.form');
 
-});
+Route::post('/login', 'App\Http\Controllers\Authentication\LoginController@authenticate')->name('login');
 
+Route::get('/register', 'App\Http\Controllers\Authentication\RegisterController@showForm')->name('show.register.form');
 
+Route::post('/register', 'App\Http\Controllers\Authentication\RegisterController@register')->name('register');

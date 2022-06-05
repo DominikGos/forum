@@ -26,10 +26,10 @@
                         <a href="{{ route('profile') }}" class="btn btn-primary fs-5">Profile</a>
                     </li>
                     <li class="nav-item d-flex justify-content-end ">
-                        <a href="{{ route('register') }}" class="btn btn-primary fs-5">Register</a>
+                        <a href="{{ route('show.register.form') }}" class="btn btn-primary fs-5">Register</a>
                     </li>
                     <li class="nav-item d-flex justify-content-end">
-                        <a href="{{ route('login') }}" class="btn btn-primary fs-5">Login</a>
+                        <a href="{{ route('show.login.form') }}" class="btn btn-primary fs-5">Login</a>
                     </li>
 
                 </ul>
