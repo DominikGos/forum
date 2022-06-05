@@ -18,6 +18,10 @@ Route::get('/', 'App\Http\Controllers\Forum\Topic@list')->name('topic.list');
 
 Route::view('/profile', 'profile')->name('profile');
 
+Route::view('/login', 'authentication.login')->name('login');
+
+Route::view('/register', 'authentication.register')->name('register');
+
 Route::group([
     'namespace' => 'App\Http\Controllers\Forum',
     'prefix' => 'topic'
