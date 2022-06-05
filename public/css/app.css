@@ -10271,8 +10271,26 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.main-navbar {
+  z-index: 100 !important;
+}
+
+.main-section {
+  margin-top: 80px !important;
+}
+
+.profile-page-avatar-wrapper {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.profile-page-avatar {
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+
 @media screen and (max-width: 992px) {
-  .home-main-section__element {
+  .main-section__element {
     width: 100% !important;
   }
 }

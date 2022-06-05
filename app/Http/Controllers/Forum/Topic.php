@@ -18,7 +18,7 @@ class Topic extends Controller
         $topics = [];
 
         foreach(User::all() as $user) {
-            foreach($user->topics->toArray() as $topic) {
+            foreach($user->topics as $topic) {
                 $topics[] = $topic;
             }
         }
@@ -36,6 +36,11 @@ class Topic extends Controller
     public function edit(int $id)
     {
         return view('topic-edit', ['id' => $id]);
+    }
+
+    public function create()
+    {
+        return view('topic-create');
     }
 
     public function update(UpdateTopic $request)
