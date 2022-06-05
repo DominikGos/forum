@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Document</title>
 </head>
@@ -26,7 +27,7 @@
                     @if (Auth::check())
 
                         <li class="nav-item d-flex justify-content-end ">
-                            <a href="{{ route('profile') }}" class="btn btn-primary fs-5">Profile</a>
+                            <a href="{{ route('profile', ['id' => Auth::id()]) }}" class="btn btn-primary fs-5">Profile</a>
                         </li>
                         <form class="nav-item d-flex justify-content-end" method="POST" action="{{ route('logout') }}">
 
@@ -53,7 +54,7 @@
 
     @yield('content')
 
-    <footer class="py-3 bg-light">
+    <footer class="py-3 bg-white mt-3">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>

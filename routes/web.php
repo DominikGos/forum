@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,14 +17,14 @@ use Illuminate\Support\Facades\Route;
 //
 Route::group([
     'namespace' => 'App\Http\Controllers',
-    'middleware' => 'auth.basic'
+    'middleware' => 'auth'
 ], function() {
 
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
     Route::get('/', 'Forum\Topic@list')->name('topic.list');
 
-    Route::view('/profile', 'profile')->name('profile');
+    Route::get('/user/{id}', 'UserController@get')->name('profile');
 
     Route::group([
         'namespace' => 'Forum',
@@ -52,11 +53,16 @@ Route::group([
 
 });
 
+Route::group([
+    'namespace' => 'App\Http\Controllers\Authentication',
+    'middleware' => RedirectIfAuthenticated::class
+], function() {
+    Route::get('/login', 'LoginController@showForm')->name('show.login.form');
 
-Route::get('/login', 'App\Http\Controllers\Authentication\LoginController@showForm')->name('show.login.form');
+    Route::post('/login', 'LoginController@authenticate')->name('login');
 
-Route::post('/login', 'App\Http\Controllers\Authentication\LoginController@authenticate')->name('login');
+    Route::get('/register', 'RegisterController@showForm')->name('show.register.form');
 
-Route::get('/register', 'App\Http\Controllers\Authentication\RegisterController@showForm')->name('show.register.form');
+    Route::post('/register', 'RegisterController@register')->name('register');
+});
 
-Route::post('/register', 'App\Http\Controllers\Authentication\RegisterController@register')->name('register');

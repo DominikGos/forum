@@ -1,4 +1,4 @@
-@extends('home')
+@extends('layouts.home')
 
 @section('content')
 
@@ -19,22 +19,9 @@
             <div class="d-flex flex-column w-100 gap-5 mt-4">
 
                 @foreach ($topics as $topic)
-                    <div class="card shadow">
-                        <div class="d-flex card-header justify-content-between flex-row gap-3 align-items-center">
-                            <p class="m-0 p-0">{{ $topic->author->name }}</p>
-                            <p class="m-0 p-0">12:17</p>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $topic['name'] }}</h5>
-                            <p class="card-text">{{ $topic['text'] }}</p>
-                            <a
-                                href="{{ route( 'topic.get', [ 'id' => $topic['id'] ]) }}"
-                                class="btn btn-primary"
-                            >
-                                Visit
-                            </a>
-                        </div>
-                    </div>
+
+                    <x-topic :topic="$topic"/>
+
                 @endforeach
 
             </div>
