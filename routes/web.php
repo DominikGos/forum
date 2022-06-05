@@ -19,6 +19,8 @@ Route::group([
     'middleware' => 'auth.basic'
 ], function() {
 
+    Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
+
     Route::get('/', 'Forum\Topic@list')->name('topic.list');
 
     Route::view('/profile', 'profile')->name('profile');

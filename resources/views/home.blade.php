@@ -22,15 +22,29 @@
 
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav ms-auto gap-3">
-                    <li class="nav-item d-flex justify-content-end ">
-                        <a href="{{ route('profile') }}" class="btn btn-primary fs-5">Profile</a>
-                    </li>
-                    <li class="nav-item d-flex justify-content-end ">
-                        <a href="{{ route('show.register.form') }}" class="btn btn-primary fs-5">Register</a>
-                    </li>
-                    <li class="nav-item d-flex justify-content-end">
-                        <a href="{{ route('show.login.form') }}" class="btn btn-primary fs-5">Login</a>
-                    </li>
+
+                    @if (Auth::check())
+
+                        <li class="nav-item d-flex justify-content-end ">
+                            <a href="{{ route('profile') }}" class="btn btn-primary fs-5">Profile</a>
+                        </li>
+                        <form class="nav-item d-flex justify-content-end" method="POST" action="{{ route('logout') }}">
+
+                            @csrf
+
+                            <button type="submit" class="btn btn-primary fs-5">Logout</button>
+                        </form>
+
+                    @else
+
+                        <li class="nav-item d-flex justify-content-end ">
+                            <a href="{{ route('show.register.form') }}" class="btn btn-primary fs-5">Register</a>
+                        </li>
+                        <li class="nav-item d-flex justify-content-end">
+                            <a href="{{ route('show.login.form') }}" class="btn btn-primary fs-5">Login</a>
+                        </li>
+
+                    @endif
 
                 </ul>
             </div>

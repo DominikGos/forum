@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Topic as ModelTopic;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class Topic extends Controller
 {
@@ -61,10 +62,8 @@ class Topic extends Controller
 
     public function store(StoreTopic $request)
     {
-        $temporaryUserId = 1;
-
         ModelTopic::create([
-            'user_id' => $temporaryUserId,
+            'user_id' => Auth::id(),
             'name' => $request->name,
             'text' => $request->text
         ]);
