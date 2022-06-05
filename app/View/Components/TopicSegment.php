@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\View\Components;
 
 use Illuminate\View\Component;
@@ -23,11 +25,11 @@ class TopicSegment extends Component
         $this->date = $date;
     }
 
-    public function readableDate(?string $date)
+    public function readableDate()
     {
-        return $date ?
-            $this->date = Carbon::parse($date)->format('H:i  M d, Y ') :
-            $this->date = null;
+        return $this->date ?
+            Carbon::parse($this->date)->format('H:i  M d, Y ') :
+            null;
     }
     /**
      * Get the view / contents that represent the component.
