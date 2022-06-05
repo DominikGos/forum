@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\Forum\Controller@forum');
 
-Route::get('/', 'App\Http\Controllers\Forum\Topic@all');
+Route::get('/', 'App\Http\Controllers\Forum\Topic@list')->name('topic.list');
 
 Route::view('/profile', 'profile')->name('profile');
 
@@ -27,9 +26,21 @@ Route::group([
 
     Route::get('{id}/edit', 'Topic@edit')->name('topic.edit');
 
+    Route::post('update', 'Topic@update')->name('topic.update');
+
     Route::get('create', 'Topic@create')->name('topic.create');
 
-    Route::post('update', 'Topic@update')->name('topic.update');
+    Route::post('create', 'Topic@store')->name('topic.store');
+
+});
+
+Route::group([
+    'namespace' => 'App\Http\Controllers\Forum',
+    'prefix' => 'topic-comment'
+], function() {
+
+    Route::post('create', 'TopicComment@store')->name('topic-comment.store');
+
 });
 
 

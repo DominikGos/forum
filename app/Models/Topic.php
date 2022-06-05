@@ -11,6 +11,12 @@ class Topic extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'text'
+    ];
+
     public function comments() {
         return $this->hasMany(TopicComment::class);
     }

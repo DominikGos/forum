@@ -9,11 +9,10 @@
                 <a href="{{ route('topic.create') }}" class="btn btn-success ms-auto fs-5">Create thread</a>
             </div>
             <div class="d-flex w-100 justify-content-between align-items-center fs-5 gap-3">
-                Number of threads: 20
+                Number of threads: {{ $numberOfTopics }}
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary fs-5">Left</button>
-                    <button type="button" class="btn btn-primary fs-5">Middle</button>
-                    <button type="button" class="btn btn-primary fs-5">Right</button>
+                    <button type="button" class="btn btn-primary fs-5">Latest</button>
+                    <button type="button" class="btn btn-primary fs-5">Oldest</button>
                 </div>
             </div>
 
