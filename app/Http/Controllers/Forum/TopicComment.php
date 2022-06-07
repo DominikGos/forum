@@ -20,6 +20,7 @@ class TopicComment extends Controller
             'text' => $request->text
         ]);
 
-        return redirect()->route('topic.get', ['id' => $request->topic_id]);
+        return redirect()->route('topic.get', ['id' => $request->topic_id])
+            ->with('comment-create-success', 'Comment has been created successful');
     }
 }

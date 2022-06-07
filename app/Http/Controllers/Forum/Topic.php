@@ -68,6 +68,6 @@ class Topic extends Controller
             'text' => $request->text
         ]);
 
-        return redirect()->route('topic.list');
+        return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
     }
 }

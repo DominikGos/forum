@@ -36,6 +36,7 @@ class TopicCommentTest extends TestCase
             ]));
 
         $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
-            ->assertSessionHasNoErrors();
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('comment-create-success');
     }
 }

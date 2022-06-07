@@ -68,8 +68,8 @@ class TopicTest extends TestCase
                 'text' => $topic->text,
             ]));
 
-        $response->assertRedirect(route('topic.list'));
-            //->assertSessionHas('topic-create-success');
+        $response->assertRedirect(route('topic.list'))
+            ->assertSessionHas('topic-create-success');
     }
 
     /* public function test_user_cannot_create_topic_with_incorrect_credentials(): void
