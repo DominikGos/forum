@@ -7,6 +7,23 @@
     </div>
     <div class="card-body">
         <p class="card-text">{{ $topicSegment->text }}</p>
+        <div class="d-flex v-100 flex-row gap-2 flex-wrap">
+
+            @if ( count($files) > 1 )
+
+                @foreach ( $files as $file )
+                    <img src="{{ $file }}" class="d-flex rounded topic-with-many-files" alt="Topic file">
+                @endforeach
+
+            @else
+
+                @foreach ( $files as $file )
+                    <img src="{{ $file }}" class="d-flex rounded topic-with-one-file" alt="Topic file">
+                @endforeach
+
+            @endif
+
+        </div>
     </div>
 </div>
 

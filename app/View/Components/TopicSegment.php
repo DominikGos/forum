@@ -10,6 +10,11 @@ use Carbon\Carbon;
 class TopicSegment extends Component
 {
     public $topicSegment;
+    public array $files = [
+        /* '/images/avatar.jpg',
+        '/images/avatar.jpg',
+        '/images/avatar.jpg', */
+    ];
 
     /**
      * Create a new component instance.
