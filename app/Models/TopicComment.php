@@ -17,7 +17,7 @@ class TopicComment extends Model
         'text',
     ];
 
-    public function author() {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
 

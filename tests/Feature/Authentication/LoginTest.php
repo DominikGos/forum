@@ -43,7 +43,7 @@ class LoginTest extends TestCase
             'password' => PASSWORD
         ]);
 
-        $response->assertRedirect()->assertSessionHasNoErrors();
+        $response->assertRedirect('/')->assertSessionHasNoErrors();
 
         $this->assertAuthenticatedAs($user);
     }
@@ -57,7 +57,7 @@ class LoginTest extends TestCase
             'password' => null
         ]);
 
-        $response->assertRedirect()->assertSessionHasErrors(['email']);
+        $response->assertRedirect(route('login.form'))->assertSessionHasErrors(['email']);
 
         $this->assertGuest();
     }

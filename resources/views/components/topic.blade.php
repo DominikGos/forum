@@ -1,8 +1,8 @@
 <div class="card shadow">
     <div class="d-flex card-header justify-content-between flex-row gap-3 align-items-center">
 
-        <a href="{{ route('profile', ['id' => $topic->author->id]) }}" class="m-0 p-0 text-decoration-none">
-            {{ $topic->author->name }}
+        <a href="{{ route('profile', ['id' => $topic->user->id]) }}" class="m-0 p-0 text-decoration-none">
+            {{ $topic->user->name }}
         </a>
         <p class="m-0 p-0"> {{ $readableDate }}</p>
     </div>

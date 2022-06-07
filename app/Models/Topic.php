@@ -17,11 +17,11 @@ class Topic extends Model
         'text'
     ];
 
-    public function comments() {
+    public function topicComments() {
         return $this->hasMany(TopicComment::class);
     }
 
-    public function author() {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
 }

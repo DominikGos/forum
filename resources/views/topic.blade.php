@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            @foreach ($topic->comments as $comment)
+            @foreach ($topic->topicComments as $comment)
                 <x-topic-segment :topicSegment="$comment"/>
             @endforeach
 

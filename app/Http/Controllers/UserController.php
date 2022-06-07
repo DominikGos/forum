@@ -27,9 +27,9 @@ class UserController extends Controller
         if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $defaultData;
 
         if($dataToDisplay === $availableData[1]) {
-            foreach(Topic::with('author')->get() as $topic) {
+            foreach(Topic::with('user')->get() as $topic) {
                 if(
-                    count( $comments = $topic->comments->where('user_id', Auth::id())) > 0
+                    count( $comments = $topic->topicComments->where('user_id', Auth::id())) > 0
                 ) {
                     foreach($comments as $comment) {
                         $userComments[] = $comment;

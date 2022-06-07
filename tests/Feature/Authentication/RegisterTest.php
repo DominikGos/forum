@@ -43,7 +43,7 @@ class RegisterTest extends TestCase
             'email' => $user->email
         ]);
 
-        $response->assertRedirect(route('login.form'))->assertSessionHasNoErrors();
+        $response->assertRedirect(route('login.form'))->assertSessionHasNoErrors()->assertSessionHas('register-success');
     }
 
     public function test_user_cannot_register_with_incorrect_credentials(): void
@@ -54,6 +54,6 @@ class RegisterTest extends TestCase
             'email' => null
         ]);
 
-        $response->assertRedirect(route('register.form'));
+        $response->assertRedirect(route('register.form'))->assertSessionHasErrors(['name']);
     }
 }

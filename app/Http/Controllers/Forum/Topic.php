@@ -17,7 +17,7 @@ class Topic extends Controller
 {
     public function list()
     {
-        $topics = ModelTopic::with('author')->get();
+        $topics = ModelTopic::with('user')->get();
 
         return view('topic-list', [
             'topics' => $topics,
@@ -27,9 +27,9 @@ class Topic extends Controller
 
     public function get(int $id)
     {
-        $topic = ModelTopic::with('author')->find($id);
+        $topic = ModelTopic::with('user')->find($id);
 
-        $numberOfComments = $topic->comments->count();
+        $numberOfComments = $topic->topicComments->count();
 
         return view('topic', [
             'topic' => $topic,
