@@ -27,7 +27,7 @@ class Topic extends Controller
 
     public function get(int $id)
     {
-        $topic = ModelTopic::find($id);
+        $topic = ModelTopic::with('author')->find($id);
 
         $numberOfComments = $topic->comments->count();
 

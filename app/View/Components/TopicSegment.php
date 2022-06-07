@@ -9,26 +9,23 @@ use Carbon\Carbon;
 
 class TopicSegment extends Component
 {
-    public string $authorName;
-    public string $text;
-    public ?string $date;
+    public $topicSegment;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $authorName, string $text, ?string $date)
+    public function __construct($topicSegment)
     {
-        $this->authorName = $authorName;
-        $this->text = $text;
-        $this->date = $date;
+       // dump($topicSegment);
+        $this->topicSegment = $topicSegment;
     }
 
     public function readableDate()
     {
-        return $this->date ?
-            Carbon::parse($this->date)->format('H:i  M d, Y ') :
+        return $this->topicSegment->created_at ?
+            Carbon::parse($this->topicSegment->created_at)->format('H:i  M d, Y ') :
             null;
     }
     /**

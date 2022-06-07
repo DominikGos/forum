@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class Login extends FormRequest
 {
     protected $stopOnFirstFailure = true;
-
+    protected $redirectRoute = 'login.form';
     /**
      * Determine if the user is authorized to make this request.
      *

@@ -27,7 +27,7 @@
                     @if (Auth::check())
 
                         <li class="nav-item d-flex justify-content-end ">
-                            <a href="{{ route('profile', ['id' => Auth::id()]) }}" class="btn btn-primary fs-5">Profile</a>
+                            <a href="{{ route('profile', ['id' => Auth::id(), 'data-to-display' => 'threads']) }}" class="btn btn-primary fs-5">Profile</a>
                         </li>
                         <form class="nav-item d-flex justify-content-end" method="POST" action="{{ route('logout') }}">
 
@@ -39,10 +39,10 @@
                     @else
 
                         <li class="nav-item d-flex justify-content-end ">
-                            <a href="{{ route('show.register.form') }}" class="btn btn-primary fs-5">Register</a>
+                            <a href="{{ route('register.form') }}" class="btn btn-primary fs-5">Register</a>
                         </li>
                         <li class="nav-item d-flex justify-content-end">
-                            <a href="{{ route('show.login.form') }}" class="btn btn-primary fs-5">Login</a>
+                            <a href="{{ route('login.form') }}" class="btn btn-primary fs-5">Login</a>
                         </li>
 
                     @endif

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => 'auth'
@@ -57,11 +56,11 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Authentication',
     'middleware' => RedirectIfAuthenticated::class
 ], function() {
-    Route::get('/login', 'LoginController@showForm')->name('show.login.form');
+    Route::get('/login', 'LoginController@showForm')->name('login.form');
 
     Route::post('/login', 'LoginController@authenticate')->name('login');
 
-    Route::get('/register', 'RegisterController@showForm')->name('show.register.form');
+    Route::get('/register', 'RegisterController@showForm')->name('register.form');
 
     Route::post('/register', 'RegisterController@register')->name('register');
 });

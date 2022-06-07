@@ -8,7 +8,6 @@ use Carbon\Carbon;
 class Topic extends Component
 {
     public $topic;
-    public string $date;
 
     /**
      * Create a new component instance.
@@ -18,13 +17,12 @@ class Topic extends Component
     public function __construct($topic)
     {
         $this->topic = $topic;
-        $this->date = $topic->created_at;
     }
 
     public function readableDate()
     {
-        return $this->date ?
-            Carbon::parse($this->date)->format('H:i  M d, Y ') :
+        return $this->topic->created_at ?
+            Carbon::parse($this->topic->created_at)->format('H:i  M d, Y ') :
             null;
     }
 

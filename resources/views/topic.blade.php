@@ -7,11 +7,11 @@
             <div class="d-flex justify-content-between align-items-center fs-5 w-100 gap-3">
                 <a class="btn btn-primary" href="/">Forum</a>
                 <h3>
-                    {{ $topic['name'] }}
+                    {{ $topic->name }}
                 </h3>
             </div>
 
-            <x-topic-segment :text="$topic['text']" :authorName="$topic->author->name" :date="$topic['created_at']"/>
+            <x-topic-segment :topicSegment="$topic"/>
 
             <div class="d-flex w-100 fs-5 mt-5 justify-content-between gap-3">
                 <p>Answers: {{ $numberOfComments }} </p>
@@ -47,9 +47,7 @@
             </div>
 
             @foreach ($topic->comments as $comment)
-
-                <x-topic-segment :text="$comment->text" :authorName="$comment->author->name" :date="$comment->created_at"/>
-
+                <x-topic-segment :topicSegment="$comment"/>
             @endforeach
 
         </div>
