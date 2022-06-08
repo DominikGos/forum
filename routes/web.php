@@ -18,10 +18,9 @@ Route::group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => 'auth'
 ], function() {
-
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
-    Route::get('/', 'Forum\Topic@list')->name('topic.list');
+    Route::get('/', 'Forum\TopicController@list')->name('topic.list');
 
     Route::get('/user/{id}', 'UserController@get')->name('profile');
 
@@ -29,25 +28,22 @@ Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic'
     ], function() {
-        Route::get('{id}/get', 'Topic@get')->name('topic.get');
+        Route::get('{id}/get', 'TopicController@get')->name('topic.get');
 
-        Route::get('{id}/edit', 'Topic@edit')->name('topic.edit');
+        Route::get('{id}/edit', 'TopicController@edit')->name('topic.edit');
 
-        Route::post('update', 'Topic@update')->name('topic.update');
+        Route::post('update', 'TopicController@update')->name('topic.update');
 
-        Route::get('create', 'Topic@create')->name('topic.create');
+        Route::get('create', 'TopicController@create')->name('topic.create');
 
-        Route::post('create', 'Topic@store')->name('topic.store');
-
+        Route::post('create', 'TopicController@store')->name('topic.store');
     });
 
     Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic-comment'
     ], function() {
-
-        Route::post('create', 'TopicComment@store')->name('topic-comment.store');
-
+        Route::post('create', 'TopicCommentController@store')->name('topic-comment.store');
     });
 
 });

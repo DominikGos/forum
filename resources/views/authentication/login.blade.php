@@ -8,6 +8,10 @@
 
                 @csrf
 
+                @php
+                    dump($errors->all())
+                @endphp
+
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" name="email" class="bg-white form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('email') }}">

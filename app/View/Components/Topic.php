@@ -8,11 +8,6 @@ use Carbon\Carbon;
 class Topic extends Component
 {
     public $topic;
-    public array $files = [
-        /* '/images/avatar.jpg',
-        '/images/avatar.jpg',
-        '/images/avatar.jpg', */
-    ];
 
     /**
      * Create a new component instance.

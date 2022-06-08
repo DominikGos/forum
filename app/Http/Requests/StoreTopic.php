@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTopic extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,6 +28,8 @@ class StoreTopic extends FormRequest
         return [
             'name' => 'required|string',
             'text' => 'required|string',
+            'files' => 'nullable|array|max:5|min:1',
+            //'files.*' => 'string', //utwórz zasadę 
         ];
     }
 }

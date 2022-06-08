@@ -24,4 +24,8 @@ class TopicComment extends Model
     public function topic() {
         return $this->belongsTo(Topic::class);
     }
+
+    public function topicCommentFiles() {
+        return $this->hasMany(TopicCommentFile::class);
+    }
 }

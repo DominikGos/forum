@@ -10,18 +10,18 @@
         <h5 class="card-title">{{ $topic->name }}</h5>
         <p class="card-text">{{ $topic->text }}</p>
 
-        <div class="d-flex v-100 flex-row gap-2 flex-wrap">
+        <div class="d-flex v-100 flex-row gap-2 p-3 flex-wrap">
 
-            @if ( count($files) > 1 )
+            @if ( count($topic->topicFiles) > 1 )
 
-                @foreach ( $files as $file )
-                    <img src="{{ $file }}" class="d-flex rounded topic-with-many-files" alt="Topic file">
+                @foreach ( $topic->topicFiles as $file )
+                    <img src="{{ $file->path }}" class="d-flex rounded topic-with-many-files" alt="Topic file">
                 @endforeach
 
             @else
 
-                @foreach ( $files as $file )
-                    <img src="{{ $file }}" class="d-flex rounded topic-with-one-file" alt="Topic file">
+                @foreach ( $topic->topicFiles as $file )
+                    <img src="{{ $file->path }}" class="d-flex rounded topic-with-one-file" alt="Topic file">
                 @endforeach
 
             @endif

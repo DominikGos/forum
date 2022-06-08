@@ -7,17 +7,20 @@ namespace App\Http\Controllers\Forum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
-use Illuminate\Http\Request;
 use App\Models\Topic as ModelTopic;
+use App\Models\TopicComment;
+use App\Models\TopicFile;
 use Carbon\Carbon;
-use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Topic extends Controller
+class TopicController extends Controller
 {
     public function list()
     {
         $topics = ModelTopic::with('user')->get();
+
+        //dump(ModelTopic::find(22)->topicFiles);
 
         return view('topic-list', [
             'topics' => $topics,
@@ -62,11 +65,21 @@ class Topic extends Controller
 
     public function store(StoreTopic $request)
     {
-        ModelTopic::create([
+        $topicId = ModelTopic::insertGetId([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'text' => $request->text
         ]);
+
+        foreach($request->file('files') ?? [] as $file) {
+            $path = $file->store('topic');
+
+            TopicFile::create([
+                'topic_id' => $topicId,
+                'user_id' => Auth::id(),
+                'path' => $path
+            ]);
+        }
 
         return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
     }
