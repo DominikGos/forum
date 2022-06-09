@@ -20,8 +20,6 @@ class TopicController extends Controller
     {
         $topics = ModelTopic::with('user')->get();
 
-        //dump(ModelTopic::find(22)->topicFiles);
-
         return view('topic-list', [
             'topics' => $topics,
             'numberOfTopics' => count($topics)

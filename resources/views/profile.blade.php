@@ -42,7 +42,7 @@
                 @if($dataToDisplay === 'threads')
 
                     @foreach ($user->topics as $topic)
-                        <x-topic :topic="$topic"/>
+                        <x-topic :topic="$topic" :displayVisitButton="true" :displayHeader="true"/>
                     @endforeach
 
                 @else

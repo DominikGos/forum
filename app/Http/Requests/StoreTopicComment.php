@@ -26,6 +26,7 @@ class StoreTopicComment extends FormRequest
         return [
             'topic_id' => 'required|integer',
             'text' => 'required|string',
+            'files' => 'nullable|array|max:5|min:1',
         ];
     }
 }

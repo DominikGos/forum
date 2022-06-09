@@ -8,15 +8,19 @@ use Carbon\Carbon;
 class Topic extends Component
 {
     public $topic;
+    public bool $displayVisitButton;
+    public bool $displayHeader;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($topic)
+    public function __construct($topic, bool $displayVisitButton, bool $displayHeader)
     {
         $this->topic = $topic;
+        $this->displayVisitButton = $displayVisitButton;
+        $this->displayHeader = $displayHeader;
     }
 
     public function readableDate()
