@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
 use App\Models\Topic as ModelTopic;
@@ -80,5 +81,24 @@ class TopicController extends Controller
         }
 
         return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
+    }
+
+    public function destroy(DestroyTopic $request, int $topicId) //zrób autoryzacje w form requescie czy użyt. może usunąć wątek
+    {
+        $topicToDestroy = ModelTopic::find($topicId);
+
+        if($topicToDestroy) {
+            //zrób usuwanie plików
+
+            foreach($topicToDestroy->topicComments as $comment) {
+                $comment->delete();
+            }
+
+            $topicToDestroy->delete();
+        }
+
+        return redirect()
+            ->route('topic.list')
+            ->with('topic-delete-success', 'Topic has been removed successful');
     }
 }

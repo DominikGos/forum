@@ -29,9 +29,19 @@
         @endif
 
         @if ( Auth::id() == $comment->user->id )
-            <a href="" class="btn btn-danger">
-                Delete
-            </a>
+            <form
+                action="{{ route('topic.comment.destroy', ['id' => $comment->id]) }}"
+                method="POST"
+            >
+
+                @csrf
+
+                @method('delete')
+
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+            </form>
         @endif
 
     </div>

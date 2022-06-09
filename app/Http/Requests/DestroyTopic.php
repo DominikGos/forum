@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Topic;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTopic extends FormRequest
+class DestroyTopic extends FormRequest
 {
-    protected $stopOnFirstFailure = true;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,7 +14,9 @@ class StoreTopic extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $topicToDestroy = Topic::find($this->route('id'));
+
+        return $topicToDestroy && $this->user()->id == $topicToDestroy->user_id;
     }
 
     /**
@@ -26,10 +27,6 @@ class StoreTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'text' => 'required|string',
-            'files' => 'nullable|array|max:5|min:1',
-            //'files.*' => 'string', //utwórz zasadę
         ];
     }
 }

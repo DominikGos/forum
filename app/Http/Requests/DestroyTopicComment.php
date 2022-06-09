@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TopicComment;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTopic extends FormRequest
+class DestroyTopicComment extends FormRequest
 {
-    protected $stopOnFirstFailure = true;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,7 +14,9 @@ class StoreTopic extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $topicComment = TopicComment::find($this->route('id'));
+
+        return $topicComment && $this->user()->id == $topicComment->user->id;
     }
 
     /**
@@ -26,10 +27,7 @@ class StoreTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'text' => 'required|string',
-            'files' => 'nullable|array|max:5|min:1',
-            //'files.*' => 'string', //utwórz zasadę
+            //
         ];
     }
 }

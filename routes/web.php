@@ -37,13 +37,17 @@ Route::group([
         Route::get('create', 'TopicController@create')->name('topic.create');
 
         Route::post('create', 'TopicController@store')->name('topic.store');
+
+        Route::delete('{id}/destroy', 'TopicController@destroy')->name('topic.destroy');
     });
 
     Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic-comment'
     ], function() {
-        Route::post('create', 'TopicCommentController@store')->name('topic-comment.store');
+        Route::post('create', 'TopicCommentController@store')->name('topic.comment.store');
+
+        Route::delete('{id}/delete', 'TopicCommentController@destroy')->name('topic.comment.destroy');
     });
 
 });

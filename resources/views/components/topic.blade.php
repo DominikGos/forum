@@ -40,9 +40,19 @@
         @endif
 
         @if ( Auth::id() == $topic->user->id )
-            <a href="" class="btn btn-danger">
-                Delete
-            </a>
+            <form
+                action="{{ route('topic.destroy', ['id' => $topic->id]) }}"
+                method="POST"
+            >
+
+                @csrf
+
+                @method('delete')
+
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+            </form>
         @endif
 
     </div>

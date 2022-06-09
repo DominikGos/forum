@@ -99,15 +99,14 @@ class TopicTest extends TestCase
 
 
         $response = $this->actingAs($user)
-            ->delete(route('topic.delete', [
-                'user_id' => $user->id,
-                'topic_id' => $topic->id,
+            ->delete(route('topic.destroy', [
+                'id' => $topic->id,
             ]));
 
         $response->assertRedirect(route('topic.list'))
             ->assertSessionHas(['topic-delete-success']);
     }
-
+/*
     public function test_unauthorized_user_cannot_delete_not_his_topic(): void
     {
         $firstUser = User::factory()->create();
@@ -120,11 +119,11 @@ class TopicTest extends TestCase
 
 
         $response = $this->actingAs($firstUser)
-            ->delete(route('topic.delete', [
-                'topic_id' => $secondUserTopic->id,
+            ->delete(route('topic.destroy', [
+                'id' => $secondUserTopic->id,
             ]));
 
         $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
             ->assertSessionHasErrors(['topic-delete-faile']);
-    }
+    } */
 }

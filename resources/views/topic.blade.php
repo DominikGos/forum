@@ -47,7 +47,7 @@
                         <div class="modal-body">
                             <form
                                 method="POST"
-                                action="{{ route('topic-comment.store') }}"
+                                action="{{ route('topic.comment.store') }}"
                                 class="d-flex align-items-start justify-content-start flex-column w-100"
                                 enctype="multipart/form-data"
                             >
