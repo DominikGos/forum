@@ -73,7 +73,7 @@
             </div>
 
             @foreach ($topic->topicComments as $comment)
-                <x-topic-comment :modelTopicComment="$comment"/>
+                <x-topic-comment :comment="$comment"/>
             @endforeach
 
         </div>

@@ -39,5 +39,11 @@
             </a>
         @endif
 
+        @if ( Auth::id() == $topic->user->id )
+            <a href="" class="btn btn-danger">
+                Delete
+            </a>
+        @endif
+
     </div>
 </div>

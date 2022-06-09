@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Topic as ModelTopic;
 use Illuminate\View\Component;
 use Carbon\Carbon;
 
@@ -16,7 +17,7 @@ class Topic extends Component
      *
      * @return void
      */
-    public function __construct($topic, bool $displayVisitButton, bool $displayHeader)
+    public function __construct(ModelTopic $topic, bool $displayVisitButton, bool $displayHeader)
     {
         $this->topic = $topic;
         $this->displayVisitButton = $displayVisitButton;

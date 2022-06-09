@@ -8,21 +8,21 @@ use Carbon\Carbon;
 
 class TopicComment extends Component
 {
-    public ModelTopicComment $modelTopicComment;
+    public ModelTopicComment $comment;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(ModelTopicComment $modelTopicComment)
+    public function __construct(ModelTopicComment $comment)
     {
-        $this->modelTopicComment = $modelTopicComment;
+        $this->comment = $comment;
     }
 
     public function readableDate()
     {
-        return $this->modelTopicComment->created_at ?
-            Carbon::parse($this->modelTopicComment->created_at)->format('H:i  M d, Y ') :
+        return $this->comment->created_at ?
+            Carbon::parse($this->comment->created_at)->format('H:i  M d, Y ') :
             null;
     }
 
