@@ -17,9 +17,18 @@ use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $topics = ModelTopic::with('user')->get();
+        $order = $request->get('order');
+
+        $accessibleOrders = [
+            'desc',
+            'asc',
+        ];
+
+        if( ! in_array($order, $accessibleOrders)) $order = $accessibleOrders[0];
+
+        $topics = ModelTopic::with('user')->orderBy('id', $order)->get();
 
         return view('topic-list', [
             'topics' => $topics,
