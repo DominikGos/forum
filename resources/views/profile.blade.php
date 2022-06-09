@@ -48,7 +48,7 @@
                 @else
 
                     @foreach ($userComments as $comment)
-                        <x-topic-segment :topicSegment="$comment"/>
+                        <x-topic-comment :modelTopicComment="$comment"/>
                     @endforeach
 
                 @endif
