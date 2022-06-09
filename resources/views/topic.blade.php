@@ -31,46 +31,53 @@
 
             <div class="d-flex w-100 fs-5 mt-5 justify-content-between gap-3">
                 <p>Answers: {{ $numberOfComments }} </p>
-                <p class="text-primary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Write the answer
-                </p>
+
+                @if ( Auth::check() )
+                    <p class="text-primary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Write the answer
+                    </p>
+                @endif
+
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Answer</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form
-                                method="POST"
-                                action="{{ route('topic.comment.store') }}"
-                                class="d-flex align-items-start justify-content-start flex-column w-100"
-                                enctype="multipart/form-data"
-                            >
+            
+            @if ( Auth::check() )
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Answer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form
+                                    method="POST"
+                                    action="{{ route('topic.comment.store') }}"
+                                    class="d-flex align-items-start justify-content-start flex-column w-100"
+                                    enctype="multipart/form-data"
+                                >
 
-                                @csrf
+                                    @csrf
 
-                                <input type="hidden" name="topic_id" value="{{ $topic['id'] }}">
-                                <div class="mb-3 w-100">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Text</label>
-                                    <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3 w-100">
-                                    <label for="formFileMultiple" class="form-label">Files</label>
-                                    <input class="form-control @error('files') is-invalid @enderror" type="file" name="files[]" id="formFileMultiple" multiple>
-                                </div>
-                                <div class="mb-3 w-100">
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </div>
-                            </form>
+                                    <input type="hidden" name="topic_id" value="{{ $topic['id'] }}">
+                                    <div class="mb-3 w-100">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Text</label>
+                                        <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                        <label for="formFileMultiple" class="form-label">Files</label>
+                                        <input class="form-control @error('files') is-invalid @enderror" type="file" name="files[]" id="formFileMultiple" multiple>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                        <button type="submit" class="btn btn-primary">Send</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             @foreach ($topic->topicComments as $comment)
                 <x-topic-comment :comment="$comment"/>

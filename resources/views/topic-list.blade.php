@@ -16,7 +16,11 @@
 
             <div class="d-flex w-100 align-items-center fs-5 gap-3">
                 Threads
-                <a href="{{ route('topic.create') }}" class="btn btn-success ms-auto fs-5">Create thread</a>
+
+                @if ( Auth::check() )
+                    <a href="{{ route('topic.create') }}" class="btn btn-success ms-auto fs-5">Create thread</a>
+                @endif
+
             </div>
             <div class="d-flex w-100 justify-content-between align-items-center fs-5 gap-3">
                 Number of threads: {{ $numberOfTopics }}

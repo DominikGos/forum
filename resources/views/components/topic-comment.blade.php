@@ -28,21 +28,26 @@
             </div>
         @endif
 
-        @if ( Auth::id() == $comment->user->id )
-            <form
-                action="{{ route('topic.comment.destroy', ['id' => $comment->id]) }}"
-                method="POST"
-            >
+        <div class="d-flex flex-row gap-2">
 
-                @csrf
+            @if ( Auth::id() == $comment->user->id )
+                <form
+                    action="{{ route('topic.comment.destroy', ['id' => $comment->id]) }}"
+                    method="POST"
+                >
 
-                @method('delete')
+                    @csrf
 
-                <button type="submit" class="btn btn-danger">
-                    Delete
-                </button>
-            </form>
-        @endif
+                    @method('delete')
+
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
+            @endif
+            
+        </div>
+
 
     </div>
 </div>

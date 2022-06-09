@@ -14,22 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('topic/{id}/get', 'App\Http\Controllers\Forum\TopicController@get')->name('topic.get');
+
+Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.list');
+
+Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('profile');
+
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => 'auth'
 ], function() {
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
-    Route::get('/', 'Forum\TopicController@list')->name('topic.list');
-
-    Route::get('/user/{id}', 'UserController@get')->name('profile');
-
     Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic'
     ], function() {
-        Route::get('{id}/get', 'TopicController@get')->name('topic.get');
-
         Route::get('{id}/edit', 'TopicController@edit')->name('topic.edit');
 
         Route::post('update', 'TopicController@update')->name('topic.update');
@@ -49,7 +49,6 @@ Route::group([
 
         Route::delete('{id}/delete', 'TopicCommentController@destroy')->name('topic.comment.destroy');
     });
-
 });
 
 Route::group([

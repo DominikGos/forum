@@ -33,27 +33,32 @@
             </div>
         @endif
 
-        @if ($displayVisitButton)
-            <a href="{{ route('topic.get', ['id' => $topic->id]) }}" class="btn btn-primary">
-                Visit
-            </a>
-        @endif
+        <div class="d-flex flex-row gap-2">
 
-        @if ( Auth::id() == $topic->user->id )
-            <form
-                action="{{ route('topic.destroy', ['id' => $topic->id]) }}"
-                method="POST"
-            >
+            @if ($displayVisitButton)
+                <a href="{{ route('topic.get', ['id' => $topic->id]) }}" class="btn btn-primary">
+                    Visit
+                </a>
+            @endif
 
-                @csrf
+            @if ( Auth::id() == $topic->user->id )
+                <form
+                    action="{{ route('topic.destroy', ['id' => $topic->id]) }}"
+                    method="POST"
+                >
 
-                @method('delete')
+                    @csrf
 
-                <button type="submit" class="btn btn-danger">
-                    Delete
-                </button>
-            </form>
-        @endif
+                    @method('delete')
+
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
+            @endif
+            
+        </div>
+
 
     </div>
 </div>
