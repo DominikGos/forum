@@ -8,6 +8,8 @@ use App\Models\Topic as ModelTopic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TopicTest extends TestCase
@@ -72,8 +74,57 @@ class TopicTest extends TestCase
             ->assertSessionHas('topic-create-success');
     }
 
-    /* public function test_user_cannot_create_topic_with_incorrect_credentials(): void
+    public function test_user_cannot_create_topic_with_incorrect_credentials(): void
     {
+        $user = User::factory()->create();
 
-    } */
+        $response = $this->actingAs($user)
+            ->post(route('topic.store', [
+                'user_id' => null,
+                'name' => null,
+                'text' => null,
+            ]));
+
+        $response->assertRedirect(route('topic.list'))
+            ->assertSessionHasErrors(['name']);
+    }
+
+    public function test_user_can_delete_own_topic(): void
+    {
+        $user = User::factory()
+            ->has(ModelTopic::factory())
+            ->create();
+
+        $topic = $user->topics[0];
+
+
+        $response = $this->actingAs($user)
+            ->delete(route('topic.delete', [
+                'user_id' => $user->id,
+                'topic_id' => $topic->id,
+            ]));
+
+        $response->assertRedirect(route('topic.list'))
+            ->assertSessionHas(['topic-delete-success']);
+    }
+
+    public function test_unauthorized_user_cannot_delete_not_his_topic(): void
+    {
+        $firstUser = User::factory()->create();
+
+        $secondUser = User::factory()
+            ->has(ModelTopic::factory())
+            ->create();
+
+        $secondUserTopic = $secondUser->topics[0];
+
+
+        $response = $this->actingAs($firstUser)
+            ->delete(route('topic.delete', [
+                'topic_id' => $secondUserTopic->id,
+            ]));
+
+        $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
+            ->assertSessionHasErrors(['topic-delete-faile']);
+    }
 }

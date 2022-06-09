@@ -39,4 +39,52 @@ class TopicCommentTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertSessionHas('comment-create-success');
     }
+
+    public function test_user_can_delete_own_comment(): void
+    {
+        $user = User::factory()
+            ->has(Topic::factory())
+            ->create();
+
+        $topic = $user->topics[0];
+
+        $topicComment = TopicComment::factory()
+            ->create([
+                'user_id' => $user->id,
+                'topic_id' => $topic->id,
+            ]);
+
+        $response = $this->actingAs($user)
+            ->delete(route('topic.comment.delete', [
+                'topic_comment_id' => $topicComment->id,
+            ]));
+
+        $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
+            ->assertSessionHas(['topic-comment-delete-success']);
+    }
+
+    public function test_unauthorized_user_cannot_delete_not_his_comment(): void
+    {
+        $firstUser = User::factory()->create();
+
+        $secondUser = User::factory()
+            ->has(Topic::factory())
+            ->create();
+
+        $secondUserTopic = $secondUser->topics[0];
+
+        $secondUserTopicComment = TopicComment::factory()
+            ->create([
+                'user_id' => $secondUser->id,
+                'topic_id' => $secondUserTopic->id,
+            ]);
+
+        $response = $this->actingAs($firstUser)
+            ->delete(route('topic.comment.delete', [
+                'topic_comment_id' => $secondUserTopicComment->id,
+            ]));
+
+        $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
+            ->assertSessionHasErrors(['topic-comment-delete-faile']);
+    }
 }
