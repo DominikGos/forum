@@ -14,21 +14,21 @@
         <p class="card-text">{{ $topic->text }}</p>
 
         @if(count($topic->topicFiles) > 0)
-            <div class="d-flex v-100 flex-row gap-2 p-3 flex-wrap">
+            <div class="d-flex w-100 flex-row gap-2 p-3 flex-wrap">
 
-                @if ( count($topic->topicFiles) > 1 )
+                @foreach ( $topic->topicFiles as $file )
 
-                    @foreach ( $topic->topicFiles as $file )
-                        <img src="{{ asset($file->path) }}" class="d-flex rounded topic-with-many-files" alt="Topic file">
-                    @endforeach
+                    @if ( count($topic->topicFiles) > 1 )
+                        <div class="d-flex justify-content-center align-items-center topic-with-many-files">
+                            <img src="{{ asset($file->path) }}" class="rounded mw-100 mh-100" alt="Topic file">
+                        </div>
+                    @else
+                        <div class="topic-with-one-file text-center w-100 p-3">
+                            <img src="{{ asset($file->path) }}" class="rounded mw-100 mh-100" alt="Topic file">
+                        </div>
+                    @endif
 
-                @else
-
-                    @foreach ( $topic->topicFiles as $file )
-                        <img src="{{ asset($file->path) }}" class="d-flex rounded topic-with-one-file" alt="Topic file">
-                    @endforeach
-
-                @endif
+                @endforeach
 
             </div>
         @endif
@@ -42,6 +42,9 @@
             @endif
 
             @if ( Auth::id() == $topic->user->id )
+                <a href="{{ route('topic.edit', ['id' => $topic->id]) }}" class="btn btn-primary">
+                    Edit
+                </a>
                 <form
                     action="{{ route('topic.destroy', ['id' => $topic->id]) }}"
                     method="POST"
@@ -56,7 +59,7 @@
                     </button>
                 </form>
             @endif
-            
+
         </div>
 
 

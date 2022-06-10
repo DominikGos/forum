@@ -11,19 +11,19 @@
         @if( count($comment->topicCommentFiles) > 0)
             <div class="d-flex v-100 flex-row gap-2 p-3 flex-wrap">
 
-                @if ( count($comment->topicCommentFiles) > 1 )
+                @foreach ( $comment->topicCommentFiles as $file )
 
-                    @foreach ( $comment->topicCommentFiles as $file )
-                        <img src="{{ asset($file->path) }}" class="d-flex rounded topic-with-many-files" alt="Topic file">
-                    @endforeach
+                    @if ( count($comment->topicCommentFiles) > 1 )
+                        <div class="d-flex justify-content-center align-items-center topic-with-many-files">
+                            <img src="{{ asset($file->path) }}" class="rounded mw-100 mh-100" alt="Topic file">
+                        </div>
+                    @else
+                        <div class="topic-with-one-file text-center w-100 p-3">
+                            <img src="{{ asset($file->path) }}" class="rounded mw-100 mh-100" alt="Topic file">
+                        </div>
+                    @endif
 
-                @else
-
-                    @foreach ( $comment->topicCommentFiles as $file )
-                        <img src="{{ asset($file->path) }}" class="d-flex rounded topic-with-one-file" alt="Topic file">
-                    @endforeach
-
-                @endif
+                @endforeach
 
             </div>
         @endif
@@ -45,7 +45,7 @@
                     </button>
                 </form>
             @endif
-            
+
         </div>
 
 

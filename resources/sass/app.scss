@@ -27,12 +27,15 @@
 }
 
 .topic-with-one-file {
-    width: 100% !important;
+    max-height: 300px !important;
 }
 
+
 .topic-with-many-files {
-    width: 45% !important;
+    max-width: 45% !important;
+    max-height: 300px !important;
 }
+
 
 @media screen and (max-width: 992px) {
 

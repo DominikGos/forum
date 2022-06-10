@@ -50,7 +50,9 @@ class TopicController extends Controller
 
     public function edit(int $id)
     {
-        return view('topic-edit', ['id' => $id]);
+        $topic = ModelTopic::find($id);
+
+        return view('topic-edit', ['topic' => $topic]);
     }
 
     public function update(UpdateTopic $request)

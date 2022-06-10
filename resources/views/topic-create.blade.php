@@ -1,7 +1,8 @@
 @extends('layouts.home')
 
 @section('content')
-    <div class="main-section d-flex w-100 justify-content-center p-3 pt-5">
+    <div class="main-section d-flex w-100 justify-content-center p-3 pt-5 flex-column align-items-center">
+        <h3>Create topic.</h3>
         <div class="main-section__element mt-3 gap-3 w-50">
             <form
                 action="{{ route('topic.store') }}"
