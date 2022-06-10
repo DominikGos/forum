@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tests\Feature\Forum;
 
@@ -18,10 +18,7 @@ class TopicTest extends TestCase
 
     public function test_user_can_get_all_topics(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->get(route('topic.list'));
+        $response = $this->get(route('topic.list'));
 
         $response->assertStatus(200)
             ->assertViewIs('topic-list')
@@ -30,14 +27,13 @@ class TopicTest extends TestCase
 
     public function test_user_can_get_topic(): void
     {
-        $user = User::factory()
-            ->has(ModelTopic::factory())
+        $user = User::factory()->create();
+
+        $topic = ModelTopic::factory()
+            ->for($user)
             ->create();
 
-        $topic = $user->topics[0];
-
-        $response = $this->actingAs($user)
-            ->get( route('topic.get', ['id' => $topic->id]) );
+        $response = $this->get(route('topic.get', ['id' => $topic->id]));
 
         $response->assertStatus(200)
             ->assertViewIs('topic')
@@ -57,11 +53,11 @@ class TopicTest extends TestCase
 
     public function test_user_can_create_topic_with_correct_credentials(): void
     {
-        $user = User::factory()
-            ->has(ModelTopic::factory())
-            ->create();
+        $user = User::factory()->create();
 
-        $topic = $user->topics[0];
+        $topic = ModelTopic::factory()
+            ->for($user)
+            ->create();
 
         $response = $this->actingAs($user)
             ->post(route('topic.store', [
@@ -91,11 +87,11 @@ class TopicTest extends TestCase
 
     public function test_user_can_delete_own_topic(): void
     {
-        $user = User::factory()
-            ->has(ModelTopic::factory())
-            ->create();
+        $user = User::factory()->create();
 
-        $topic = $user->topics[0];
+        $topic = ModelTopic::factory()
+            ->for($user)
+            ->create();
 
 
         $response = $this->actingAs($user)
@@ -106,7 +102,7 @@ class TopicTest extends TestCase
         $response->assertRedirect(route('topic.list'))
             ->assertSessionHas(['topic-delete-success']);
     }
-/*
+    /*
     public function test_unauthorized_user_cannot_delete_not_his_topic(): void
     {
         $firstUser = User::factory()->create();
@@ -126,4 +122,71 @@ class TopicTest extends TestCase
         $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
             ->assertSessionHasErrors(['topic-delete-faile']);
     } */
+
+    public function test_user_can_view_topic_edit_form()
+    {
+        $user = User::factory()->create();
+
+        $topic = ModelTopic::factory()
+            ->for($user)
+            ->create();
+
+        $response = $this->actingAs($user)
+            ->get(route('topic.edit', ['id' => $topic->id]));
+
+        $response->assertStatus(200)
+            ->assertViewIs('topic-edit')
+            ->assertSessionHasNoErrors();
+    }
+
+    public function test_user_can_update_own_topic_with_correct_credentials()
+    {
+        $user = User::factory()->create();
+
+        $topic = ModelTopic::factory()
+            ->for($user)
+            ->create();
+
+        $updatedTopic = ModelTopic::factory()
+            ->for($user)
+            ->make(['id' => $topic->id]);
+
+        $response = $this->actingAs($user)->put(
+            route('topic.update', ['id' => $topic->id]),
+            [
+                'name' => $updatedTopic->name,
+                'text' => $updatedTopic->text,
+            ]
+        );
+
+        $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('topic-update-success');
+    }
+
+    public function test_unauthorized_user_cannot_update_not_his_topic_with_correct_credentials()
+    {
+        $firstUser = User::factory()->create();
+
+        $secondUser = User::factory()->create();
+
+        $topic = ModelTopic::factory()
+            ->for($firstUser)
+            ->create();
+
+        $updatedTopic = ModelTopic::factory()
+            ->for($firstUser)
+            ->make(['id' => $topic->id]);
+
+        $response = $this->actingAs($secondUser)->put(
+            route('topic.update', ['id' => $topic->id]),
+            [
+                'name' => $updatedTopic->name,
+                'text' => $updatedTopic->text,
+            ]
+        );
+
+        $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
+            ->assertSessionHasErrors('topic-update-faile');
+    }
 }
