@@ -3,7 +3,16 @@
         <a href="{{ route('profile', ['id' => $topic->user->id]) }}" class="m-0 p-0 text-decoration-none">
             {{ $topic->user->name }}
         </a>
-        <p class="m-0 p-0"> {{ $readableDate }}</p>
+        <p class="m-0 p-0">
+            {{ $readableDate }}
+
+            @if ( $topic->updated )
+                <strong>
+                    ( Edited )
+                </strong>
+            @endif
+
+        </p>
     </div>
     <div class="card-body">
 

@@ -17,7 +17,7 @@ class UpdateTopic extends FormRequest
     public function authorize()
     {
         $topic = Topic::find($this->route('id'));
-        
+
         return $topic && $this->user()->id == $topic->user_id;
     }
 

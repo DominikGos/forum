@@ -61,6 +61,7 @@ class TopicController extends Controller
 
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;
+        $topic->updated = true;
         $topic->updated_at = Carbon::now();
 
         $topic->save();
