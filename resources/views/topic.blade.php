@@ -11,6 +11,13 @@
                 </div>
             @endif
 
+            @if (session('topic-update-success'))
+                <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                    {{ session('topic-update-success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
                     @foreach ( $errors->all() as $error )
@@ -39,7 +46,7 @@
                 @endif
 
             </div>
-            
+
             @if ( Auth::check() )
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

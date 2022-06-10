@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Topic;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTopic extends FormRequest
@@ -15,7 +16,9 @@ class UpdateTopic extends FormRequest
      */
     public function authorize()
     {
-        return true; //Auth::user()->topics->where(id, $request->id)->first()
+        $topic = Topic::find($this->route('id'));
+        
+        return $topic && $this->user()->id == $topic->user_id;
     }
 
     /**
@@ -26,7 +29,6 @@ class UpdateTopic extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer',
             'name' => 'nullable|string',
             'text' => 'nullable|string'
         ];

@@ -32,7 +32,7 @@ Route::group([
     ], function() {
         Route::get('{id}/edit', 'TopicController@edit')->name('topic.edit');
 
-        Route::post('update', 'TopicController@update')->name('topic.update');
+        Route::put('{id}/update', 'TopicController@update')->name('topic.update');
 
         Route::get('create', 'TopicController@create')->name('topic.create');
 

@@ -55,9 +55,9 @@ class TopicController extends Controller
         return view('topic-edit', ['topic' => $topic]);
     }
 
-    public function update(UpdateTopic $request)
+    public function update(UpdateTopic $request, int $id)
     {
-        $topic = ModelTopic::find($request->id);
+        $topic = ModelTopic::find($id);
 
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;
@@ -65,7 +65,9 @@ class TopicController extends Controller
 
         $topic->save();
 
-        return redirect()->route('topic.get', ['id' => $request->id]);
+        return redirect()
+            ->route('topic.get', ['id' => $id])
+            ->with('topic-update-success', 'Topic has been updated successful.');
     }
 
     public function create()
@@ -78,7 +80,8 @@ class TopicController extends Controller
         $topicId = ModelTopic::insertGetId([
             'user_id' => Auth::id(),
             'name' => $request->name,
-            'text' => $request->text
+            'text' => $request->text,
+            'created_at' => Carbon::now()
         ]);
 
         foreach($request->file('files') ?? [] as $file) {
@@ -94,7 +97,7 @@ class TopicController extends Controller
         return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
     }
 
-    public function destroy(DestroyTopic $request, int $topicId) //zrób autoryzacje w form requescie czy użyt. może usunąć wątek
+    public function destroy(DestroyTopic $request, int $topicId)
     {
         $topicToDestroy = ModelTopic::find($topicId);
 

@@ -5,7 +5,7 @@
         <h3>Edit topic.</h3>
         <div class="main-section__element mt-3 gap-3 w-50">
             <form
-                action="{{ route('topic.update') }}"
+                action="{{ route('topic.update', ['id' => $topic->id]) }}"
                 method="POST"
                 class="d-flex align-items-start justify-content-start flex-column w-100"
                 enctype="multipart/form-data"

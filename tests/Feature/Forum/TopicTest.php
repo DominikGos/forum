@@ -102,7 +102,7 @@ class TopicTest extends TestCase
         $response->assertRedirect(route('topic.list'))
             ->assertSessionHas(['topic-delete-success']);
     }
-    /*
+
     public function test_unauthorized_user_cannot_delete_not_his_topic(): void
     {
         $firstUser = User::factory()->create();
@@ -119,9 +119,9 @@ class TopicTest extends TestCase
                 'id' => $secondUserTopic->id,
             ]));
 
-        $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
-            ->assertSessionHasErrors(['topic-delete-faile']);
-    } */
+        $response->assertStatus(403);
+
+    }
 
     public function test_user_can_view_topic_edit_form()
     {
@@ -164,7 +164,7 @@ class TopicTest extends TestCase
             ->assertSessionHas('topic-update-success');
     }
 
-    public function test_unauthorized_user_cannot_update_not_his_topic_with_correct_credentials()
+    public function test_user_cannot_update_not_his_topic_with_correct_credentials()
     {
         $firstUser = User::factory()->create();
 
@@ -186,7 +186,6 @@ class TopicTest extends TestCase
             ]
         );
 
-        $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
-            ->assertSessionHasErrors('topic-update-faile');
+        $response->assertStatus(403);
     }
 }
