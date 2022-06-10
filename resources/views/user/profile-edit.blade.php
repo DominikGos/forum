@@ -18,9 +18,10 @@
         </div>
 
         <form
-            action=""
+            action="{{ route('profile.update', ['id' => $user->id]) }}"
             method="POST"
             class="d-flex align-items-start justify-content-start flex-column w-100 mt-5"
+            enctype="multipart/form-data"
         >
 
             @method('put')
@@ -35,7 +36,7 @@
                     class="form-control @error('name') is-invalid @enderror"
                     id="topic"
                     aria-describedby="emailHelp"
-                    value="{{ $user->name }}"
+                    value="{{ old('name') ?? $user->name }}"
                 >
 
                 @error('name')

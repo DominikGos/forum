@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfile;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,5 +49,19 @@ class UserController extends Controller
         return view('user.profile-edit', ['user' => $user]);
     }
 
-    
+    public function update(UpdateProfile $request, int $id)
+    {
+        $user = User::find($id);
+
+        if($request->avatar) {
+            $avatarPath = $request->file('avatar')->store('avatar');
+        }
+
+        $user->name = $request->name ?? $user->name;
+        $user->avatar = $avatarPath ?? $user->avatar;
+
+        $user->save();
+
+        return redirect()->route('profile', ['id' => $user->id]);
+    }
 }

@@ -8,7 +8,7 @@
                 <div class="profile-page-avatar-wrapper border border-3 d-flex justify-content-center align-items-center rounded-circle overflow-hidden">
 
                     @if ($user->avatar)
-                        <img src="{{ $user->avatar }}" class="profile-page-avatar d-block" alt="profile avatar">
+                        <img src="{{ asset($user->avatar) }}" class="profile-page-avatar d-block" alt="profile avatar">
                     @else
                         <img src="/images/avatar.jpg" class="profile-page-avatar d-block" alt="profile avatar">
                     @endif

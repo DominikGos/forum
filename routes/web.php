@@ -28,6 +28,8 @@ Route::group([
 
     Route::get('/profile/{id}/edit', 'UserController@edit')->name('profile.edit');
 
+    Route::put('/profile/{id}/update', 'UserController@update')->name('profile.update');
+
     Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic'

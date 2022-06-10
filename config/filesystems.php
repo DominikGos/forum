@@ -73,6 +73,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('topic') => storage_path('app/topic'),
         public_path('topic-comment') => storage_path('app/topic-comment'),
+        public_path('avatar') => storage_path('app/avatar'),
     ],
 
 ];
