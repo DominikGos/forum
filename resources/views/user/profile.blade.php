@@ -14,7 +14,14 @@
                     @endif
 
                 </div>
-                <h3> {{ $user->name }} </h3>
+                <div class="d-flex flex-row gap-3">
+                    <h3> {{ $user->name }} </h3>
+
+                    @if ( $user->id == Auth::id() )
+                        <a href="{{ route('profile.edit', ['id' => $user->id]) }}" class="btn btn-success">Edit profile</a>
+                    @endif
+
+                </div>
             </div>
             <div class="d-flex justify-content-between"></div>
             <div class="d-flex justify-content-center fs-5 w-100 gap-3">

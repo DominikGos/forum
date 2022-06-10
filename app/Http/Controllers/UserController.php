@@ -36,8 +36,17 @@ class UserController extends Controller
             }
         }
 
-        return view('profile', [
+        return view('user.profile', [
             'user' => $user, 'dataToDisplay' => $dataToDisplay, 'userComments' => $userComments
         ]);
     }
+
+    public function edit(int $id)
+    {
+        $user = User::find($id);
+
+        return view('user.profile-edit', ['user' => $user]);
+    }
+
+    
 }

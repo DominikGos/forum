@@ -26,6 +26,8 @@ Route::group([
 ], function() {
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
+    Route::get('/profile/{id}/edit', 'UserController@edit')->name('profile.edit');
+
     Route::group([
         'namespace' => 'Forum',
         'prefix' => 'topic'

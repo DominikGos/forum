@@ -20,7 +20,7 @@ class UserTest extends TestCase
         $response = $this->get(route('profile', ['id' => $user->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('profile')
+            ->assertViewIs('user.profile')
             ->assertViewHasAll([
                 'user',
                 'dataToDisplay',
