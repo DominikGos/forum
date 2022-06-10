@@ -20,11 +20,9 @@ class UserController extends Controller
             'comments'
         ];
 
-        $defaultData = $availableData[0];
-
         $dataToDisplay = $request->get('data-to-display');
 
-        if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $defaultData;
+        if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $availableData[0];
 
         if($dataToDisplay === $availableData[1]) {
             foreach(Topic::with('user')->get() as $topic) {

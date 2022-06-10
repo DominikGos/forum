@@ -21,12 +21,12 @@ class TopicController extends Controller
     {
         $order = $request->get('order');
 
-        $accessibleOrders = [
+        $accessibleSequences = [
             'desc',
             'asc',
         ];
 
-        if( ! in_array($order, $accessibleOrders)) $order = $accessibleOrders[0];
+        if( ! in_array($order, $accessibleSequences)) $order = $accessibleSequences[0];
 
         $topics = ModelTopic::with('user')->orderBy('id', $order)->get();
 
