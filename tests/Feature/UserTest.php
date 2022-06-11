@@ -35,26 +35,26 @@ class UserTest extends TestCase
             ->get(route('profile.edit', ['id' => $user->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('profile.edit');
+            ->assertViewIs('user.profile-edit');
     }
 
     public function test_user_can_update_own_profile()
     {
         $user = User::factory()->create();
 
-        $updatedUser = User::factory()->make(['id' => $user->id]);
+        $updatedUser = User::factory()->make();
 
         $response = $this->actingAs($user)
             ->put(
                 route('profile.update', ['id' => $user->id]),
                 [
                     'name' => $updatedUser->name,
-                    'avatar' => $updatedUser->avatar
                 ]
             );
 
         $response->assertRedirect(route('profile', ['id' => $user->id]))
-            ->assertSessionHas('profile-update-success');
+            ->assertSessionHas('profile-update-success')
+            ->assertSessionHasNoErrors();
     }
 
     public function test_user_cannot_update_not_his_profile()
@@ -63,9 +63,9 @@ class UserTest extends TestCase
 
         $secondUser = User::factory()->create();
 
-        $updatedFirstUser = User::factory()->make(['id' => $firstUser->id]);
+        $updatedFirstUser = User::factory()->make();
 
-        $response = $this->actingAs($firstUser)
+        $response = $this->actingAs($secondUser)
             ->put(
                 route('profile.update', ['id' => $firstUser->id]),
                 [
@@ -74,7 +74,6 @@ class UserTest extends TestCase
                 ]
             );
 
-        $response->assertRedirect(route('profile', ['id' => $firstUser->id]))
-            ->assertStatus(403);
+        $response->assertStatus(403);
     }
 }
