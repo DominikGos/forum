@@ -17,11 +17,11 @@ class TopicCommentTest extends TestCase
 
     public function test_user_can_create_topic_comment_with_correct_credentials()
     {
-        $user = User::factory()
-            ->has(Topic::factory())
-            ->create();
+        $user = User::factory()->create();
 
-        $topic = $user->topics[0];
+        $topic = Topic::factory()
+            ->for($user)
+            ->create();
 
         $topicComment = TopicComment::factory()
             ->make([
@@ -42,11 +42,11 @@ class TopicCommentTest extends TestCase
 
     public function test_user_can_delete_own_comment(): void
     {
-        $user = User::factory()
-            ->has(Topic::factory())
-            ->create();
+        $user = User::factory()->create();
 
-        $topic = $user->topics[0];
+        $topic = Topic::factory()
+            ->for($user)
+            ->create();
 
         $topicComment = TopicComment::factory()
             ->create([
@@ -63,15 +63,15 @@ class TopicCommentTest extends TestCase
             ->assertSessionHas(['topic-comment-delete-success']);
     }
 
-    /* public function test_unauthorized_user_cannot_delete_not_his_comment(): void
+    public function test_user_cannot_delete_not_his_comment(): void
     {
         $firstUser = User::factory()->create();
 
-        $secondUser = User::factory()
-            ->has(Topic::factory())
-            ->create();
+        $secondUser = User::factory()->create();
 
-        $secondUserTopic = $secondUser->topics[0];
+        $secondUserTopic = Topic::factory()
+            ->for($secondUser)
+            ->create();
 
         $secondUserTopicComment = TopicComment::factory()
             ->create([
@@ -86,5 +86,5 @@ class TopicCommentTest extends TestCase
 
         $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
             ->assertSessionHasErrors(['topic-comment-delete-faile']);
-    } */
+    }
 }

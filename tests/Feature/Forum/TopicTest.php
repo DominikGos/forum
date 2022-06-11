@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forum;
 
-use App\Models\Topic as ModelTopic;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -29,7 +29,7 @@ class TopicTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($user)
             ->create();
 
@@ -55,7 +55,7 @@ class TopicTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($user)
             ->create();
 
@@ -89,7 +89,7 @@ class TopicTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($user)
             ->create();
 
@@ -108,7 +108,7 @@ class TopicTest extends TestCase
         $firstUser = User::factory()->create();
 
         $secondUser = User::factory()
-            ->has(ModelTopic::factory())
+            ->has(Topic::factory())
             ->create();
 
         $secondUserTopic = $secondUser->topics[0];
@@ -127,7 +127,7 @@ class TopicTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($user)
             ->create();
 
@@ -143,11 +143,11 @@ class TopicTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($user)
             ->create();
 
-        $updatedTopic = ModelTopic::factory()
+        $updatedTopic = Topic::factory()
             ->for($user)
             ->make(['id' => $topic->id]);
 
@@ -170,11 +170,11 @@ class TopicTest extends TestCase
 
         $secondUser = User::factory()->create();
 
-        $topic = ModelTopic::factory()
+        $topic = Topic::factory()
             ->for($firstUser)
             ->create();
 
-        $updatedTopic = ModelTopic::factory()
+        $updatedTopic = Topic::factory()
             ->for($firstUser)
             ->make(['id' => $topic->id]);
 
@@ -187,5 +187,15 @@ class TopicTest extends TestCase
         );
 
         $response->assertStatus(403);
+    }
+
+    public function test_user_can_search_topics_by_name()
+    {
+        $searchedTopicName = 'topic';
+
+        $response = $this->get(route('topic.search', ['name' => $searchedTopicName]));
+
+        $response->assertRedirect(route('topic.found'))
+            ->assertSessionHasNoErrors();
     }
 }
