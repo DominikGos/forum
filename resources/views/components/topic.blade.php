@@ -1,6 +1,15 @@
 <div class="card shadow w-100">
     <div class="d-flex card-header justify-content-between flex-row gap-3 align-items-center">
-        <a href="{{ route('profile', ['id' => $topic->user->id]) }}" class="m-0 p-0 text-decoration-none">
+        <a href="{{ route('profile', ['id' => $topic->user->id]) }}" class="m-0 p-0 text-decoration-none d-flex flex-row justifu-content-center align-items-center gap-3">
+            <div class="topic-user-avatar-wrapper border border-1 d-flex justify-content-center align-items-center rounded-circle overflow-hidden">
+
+                @if ($topic->user->avatar)
+                    <img src="{{ asset($topic->user->avatar) }}" class="topic-user-avatar d-block" alt="profile avatar">
+                @else
+                    <img src="{{ asset($avatar) }}" class="profile-page-avatar d-block" alt="profile avatar">
+                @endif
+
+            </div>
             {{ $topic->user->name }}
         </a>
         <p class="m-0 p-0">

@@ -10285,8 +10285,22 @@ textarea.form-control-lg {
 }
 
 .profile-page-avatar {
+  min-height: 100% !important;
+  min-width: 100% !important;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.topic-user-avatar-wrapper {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.topic-user-avatar {
   min-width: 100% !important;
   min-height: 100% !important;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .topic-with-one-file {

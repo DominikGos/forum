@@ -10,7 +10,7 @@
                     @if ($user->avatar)
                         <img src="{{ asset($user->avatar) }}" class="profile-page-avatar d-block" alt="profile avatar">
                     @else
-                        <img src="/images/avatar.jpg" class="profile-page-avatar d-block" alt="profile avatar">
+                        <img src="{{ asset($avatar) }}" class="profile-page-avatar d-block" alt="profile avatar">
                     @endif
 
                 </div>
