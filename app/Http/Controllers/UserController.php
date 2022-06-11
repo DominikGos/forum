@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
 use App\Models\Topic;
+use App\Models\TopicComment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,19 +27,13 @@ class UserController extends Controller
         if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $availableData[0];
 
         if($dataToDisplay === $availableData[1]) {
-            foreach(Topic::with('user')->get() as $topic) {
-                if(
-                    count( $comments = $topic->topicComments->where('user_id', Auth::id())) > 0
-                ) {
-                    foreach($comments as $comment) {
-                        $userComments[] = $comment;
-                    }
-                }
-            }
+            $userComments = TopicComment::where('user_id', $id)->get();
         }
 
         return view('user.profile', [
-            'user' => $user, 'dataToDisplay' => $dataToDisplay, 'userComments' => $userComments
+            'user' => $user,
+            'dataToDisplay' => $dataToDisplay,
+            'userComments' => $userComments
         ]);
     }
 
