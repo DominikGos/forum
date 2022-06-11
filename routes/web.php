@@ -18,6 +18,8 @@ Route::get('topic/{id}/get', 'App\Http\Controllers\Forum\TopicController@get')->
 
 Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.list');
 
+Route::get('/topic/search', 'App\Http\Controllers\Forum\TopicController@search')->name('topic.search');
+
 Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('profile');
 
 Route::group([

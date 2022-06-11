@@ -6,9 +6,10 @@ namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyTopic;
+use App\Http\Requests\SearchTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
-use App\Models\Topic as ModelTopic;
+use App\Models\Topic;
 use App\Models\TopicComment;
 use App\Models\TopicFile;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class TopicController extends Controller
 
         if( ! in_array($order, $accessibleSequences)) $order = $accessibleSequences[0];
 
-        $topics = ModelTopic::with('user')->orderBy('id', $order)->get();
+        $topics = Topic::with('user')->orderBy('id', $order)->get();
 
         return view('topic-list', [
             'topics' => $topics,
@@ -38,7 +39,7 @@ class TopicController extends Controller
 
     public function get(int $id)
     {
-        $topic = ModelTopic::with('user')->find($id);
+        $topic = Topic::with('user')->find($id);
 
         $numberOfComments = $topic->topicComments->count();
 
@@ -50,14 +51,14 @@ class TopicController extends Controller
 
     public function edit(int $id)
     {
-        $topic = ModelTopic::find($id);
+        $topic = Topic::find($id);
 
         return view('topic-edit', ['topic' => $topic]);
     }
 
     public function update(UpdateTopic $request, int $id)
     {
-        $topic = ModelTopic::find($id);
+        $topic = Topic::find($id);
 
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;
@@ -78,7 +79,7 @@ class TopicController extends Controller
 
     public function store(StoreTopic $request)
     {
-        $topicId = ModelTopic::insertGetId([
+        $topicId = Topic::insertGetId([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'text' => $request->text,
@@ -100,7 +101,7 @@ class TopicController extends Controller
 
     public function destroy(DestroyTopic $request, int $topicId)
     {
-        $topicToDestroy = ModelTopic::find($topicId);
+        $topicToDestroy = Topic::find($topicId);
 
         if($topicToDestroy) {
             //zrób usuwanie plików
@@ -115,5 +116,19 @@ class TopicController extends Controller
         return redirect()
             ->route('topic.list')
             ->with('topic-delete-success', 'Topic has been removed successful');
+    }
+
+    public function search(SearchTopic $request)
+    {
+        $searchedTopicName = $request->name;
+
+        $topics = [];
+
+        $topics = Topic::where('name', 'like', "%$searchedTopicName%")->get();
+
+        return view('topic-list', [
+            'topics' => $topics,
+            'numberOfTopics' => count($topics)
+        ]);
     }
 }

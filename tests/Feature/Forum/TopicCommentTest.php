@@ -81,10 +81,9 @@ class TopicCommentTest extends TestCase
 
         $response = $this->actingAs($firstUser)
             ->delete(route('topic.comment.destroy', [
-                'topic_comment_id' => $secondUserTopicComment->id,
+                'id' => $secondUserTopicComment->id,
             ]));
 
-        $response->assertRedirect(route('topic.get', ['id' => $secondUserTopic->id]))
-            ->assertSessionHasErrors(['topic-comment-delete-faile']);
+        $response->assertStatus(403);
     }
 }

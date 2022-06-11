@@ -195,7 +195,8 @@ class TopicTest extends TestCase
 
         $response = $this->get(route('topic.search', ['name' => $searchedTopicName]));
 
-        $response->assertRedirect(route('topic.found'))
+        $response->assertViewIs('topic-list')
+            ->assertViewHas(['topics', 'numberOfTopics'])
             ->assertSessionHasNoErrors();
     }
 }

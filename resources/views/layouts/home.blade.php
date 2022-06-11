@@ -45,8 +45,8 @@
                     @endif
 
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2 btn-outline-light" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" method="GET" action="{{ route('topic.search') }}">
+                    <input class="form-control me-2 btn-outline-light" name="name" type="search" placeholder="Search topic by name." aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
             </div>
