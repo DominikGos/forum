@@ -26,10 +26,10 @@ class StoreTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'text' => 'required|string',
+            'name' => 'required|string|min:3',
+            'text' => 'required|string|min:3',
             'files' => 'nullable|array|max:5|min:1',
-            //'files.*' => 'string', //utwórz zasadę
+            'files.*' => 'file|mimes:png,jpg,jpeg',
         ];
     }
 }

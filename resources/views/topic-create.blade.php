@@ -15,7 +15,14 @@
 
                 <div class="mb-3 w-100">
                     <label for="topic" class="form-label">Topic</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="topic" aria-describedby="emailHelp">
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control @error('name') is-invalid @enderror"
+                        id="topic"
+                        aria-describedby="emailHelp"
+                        value="{{ old('name') }}"
+                    >
 
                     @error('name')
 
@@ -28,7 +35,11 @@
                 </div>
                 <div class="mb-3 w-100">
                     <label for="exampleFormControlTextarea1" class="form-label">Text</label>
-                    <textarea class="form-control @error('text') is-invalid @enderror" name="text" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea
+                        class="form-control @error('text') is-invalid @enderror"
+                        name="text" id="exampleFormControlTextarea1"
+                        rows="3"
+                    > {{ old('text') }} </textarea>
 
                     @error('text')
 
@@ -42,7 +53,6 @@
                 <div class="mb-3 w-100">
                     <label for="formFileMultiple" class="form-label">Multiple files input example</label>
                     <input class="form-control @error('files') is-invalid @enderror" type="file" name="files[]" id="formFileMultiple" multiple>
-
 
                     @error('files')
 
