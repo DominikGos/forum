@@ -17,9 +17,9 @@
                 <div class="d-flex flex-row gap-3">
                     <h3> {{ $user->name }} </h3>
 
-                    @if ( $user->id == Auth::id() )
+                    @can ('update-profile', $user )
                         <a href="{{ route('profile.edit', ['id' => $user->id]) }}" class="btn btn-success">Edit profile</a>
-                    @endif
+                    @endcan
 
                 </div>
             </div>

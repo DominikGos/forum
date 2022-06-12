@@ -59,7 +59,7 @@
                 </a>
             @endif
 
-            @if ( Auth::id() == $topic->user->id )
+            @canany(['delete-topic', 'update-topic'], $topic)
                 <a href="{{ route('topic.edit', ['id' => $topic->id]) }}" class="btn btn-primary">
                     Edit
                 </a>
@@ -76,7 +76,7 @@
                         Delete
                     </button>
                 </form>
-            @endif
+            @endcan
 
         </div>
 

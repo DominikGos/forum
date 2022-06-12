@@ -8,6 +8,7 @@ use App\Models\TopicComment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -39,14 +40,20 @@ class UserController extends Controller
 
     public function edit(int $id)
     {
-        $user = User::find($id);
+        Gate::authorize(
+            'update-profile',
+            $user = User::find($id)
+        );
 
         return view('user.profile-edit', ['user' => $user]);
     }
 
     public function update(UpdateProfile $request, int $id)
     {
-        $user = User::find($id);
+        Gate::authorize(
+            'update-profile',
+            $user = User::find($id)
+        );
 
         if($request->avatar) {
             $avatarPath = $request->file('avatar')->store('avatar');

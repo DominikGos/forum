@@ -15,6 +15,7 @@ use App\Models\TopicFile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TopicController extends Controller
 {
@@ -51,14 +52,20 @@ class TopicController extends Controller
 
     public function edit(int $id)
     {
-        $topic = Topic::find($id);
+        Gate::authorize(
+            'update-topic',
+            $topic = Topic::find($id)
+        );
 
         return view('topic-edit', ['topic' => $topic]);
     }
 
     public function update(UpdateTopic $request, int $id)
     {
-        $topic = Topic::find($id);
+        Gate::authorize(
+            'update-topic',
+            $topic = Topic::find($id)
+        );
 
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;
@@ -99,9 +106,12 @@ class TopicController extends Controller
         return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
     }
 
-    public function destroy(DestroyTopic $request, int $topicId)
+    public function destroy(DestroyTopic $request, int $id)
     {
-        $topicToDestroy = Topic::find($topicId);
+        Gate::authorize(
+            'delete-topic',
+            $topicToDestroy = Topic::find($id)
+        );
 
         if($topicToDestroy) {
             //zrób usuwanie plików

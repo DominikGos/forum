@@ -14,9 +14,7 @@ class DestroyTopic extends FormRequest
      */
     public function authorize()
     {
-        $topicToDestroy = Topic::find($this->route('id'));
-
-        return $topicToDestroy && $this->user()->id == $topicToDestroy->user_id;
+        return true;
     }
 
     /**

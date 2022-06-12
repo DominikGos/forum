@@ -70,7 +70,6 @@ class UserTest extends TestCase
                 route('profile.update', ['id' => $firstUser->id]),
                 [
                     'name' => $updatedFirstUser->name,
-                    'avatar' => $updatedFirstUser->avatar
                 ]
             );
 
