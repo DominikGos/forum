@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function get(Request $request, int $id)
     {
-        $user = User::find($id);
+        $user = User::with(['topics.user', 'topics.topicFiles'])->find($id);
 
         $userComments = [];
 
@@ -27,7 +27,7 @@ class UserController extends Controller
         if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $availableData[0];
 
         if($dataToDisplay === $availableData[1]) {
-            $userComments = TopicComment::where('user_id', $id)->get();
+            $userComments = TopicComment::with(['user', 'topicCommentFiles', 'topic'])->where('user_id', $id)->get();
         }
 
         return view('user.profile', [

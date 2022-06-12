@@ -20,16 +20,16 @@ class TopicController extends Controller
 {
     public function list(Request $request)
     {
-        $order = $request->get('order');
+        $sequence = $request->get('order');
 
         $accessibleSequences = [
             'desc',
             'asc',
         ];
 
-        if( ! in_array($order, $accessibleSequences)) $order = $accessibleSequences[0];
+        if( ! in_array($sequence, $accessibleSequences)) $order = $accessibleSequences[0];
 
-        $topics = Topic::with('user')->orderBy('id', $order)->get();
+        $topics = Topic::with(['user', 'topicFiles'])->orderBy('id', $order)->get();
 
         return view('topic-list', [
             'topics' => $topics,
@@ -39,7 +39,7 @@ class TopicController extends Controller
 
     public function get(int $id)
     {
-        $topic = Topic::with('user')->find($id);
+        $topic = Topic::with(['user', 'topicComments.user', 'topicComments.topicCommentFiles'])->find($id);
 
         $numberOfComments = $topic->topicComments->count();
 
