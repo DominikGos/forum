@@ -55,6 +55,17 @@
                 @else
 
                     @foreach ($userComments as $comment)
+                        <div class="d-flex justify-content-between align-items-center fs-5 w-100 gap-3 mt-5">
+                            <a
+                                class="btn btn-primary"
+                                href="{{ route('topic.get', ['id' => $comment->topic->id]) }}"
+                            >
+                                Visit
+                            </a>
+                            <h3>
+                                {{  $comment->topic->name }}
+                            </h3>
+                        </div>
                         <x-topic-comment :comment="$comment"/>
                     @endforeach
 
