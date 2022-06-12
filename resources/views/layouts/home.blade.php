@@ -27,10 +27,13 @@
                             <a href="{{ route('user.get', ['id' => Auth::id(), 'data-to-display' => 'threads']) }}"
                                 class="nav-link">Profile</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('user.list') }}"
-                                class="nav-link">Users</a>
-                        </li>
+
+                        @can('userList', App\Models\User\User::class)
+                            <li class="nav-item">
+                                <a href="{{ route('user.list') }}" class="nav-link">Users</a>
+                            </li>
+                        @endcan
+
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}" class="">
 
@@ -50,7 +53,8 @@
 
                 </ul>
                 <form class="d-flex" method="GET" action="{{ route('topic.search') }}">
-                    <input class="form-control me-2 btn-outline-light" name="name" type="search" placeholder="Search topic by name." aria-label="Search">
+                    <input class="form-control me-2 btn-outline-light" name="name" type="search"
+                        placeholder="Search topic by name." aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
             </div>

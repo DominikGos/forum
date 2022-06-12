@@ -71,6 +71,8 @@ class UserController extends Controller
 
     public function list()
     {
+        Gate::authorize('userList', User::class);
+
         $users = User::all();
 
         return view('user.list', ['users' => $users]);

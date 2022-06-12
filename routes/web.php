@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('topic/{id}/get', 'App\Http\Controllers\Forum\TopicController@get')->name('topic.get');
+Route::get('topic/{id}', 'App\Http\Controllers\Forum\TopicController@get')->name('topic.get');
 
 Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.list');
 
