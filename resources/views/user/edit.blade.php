@@ -11,14 +11,14 @@
                 @if ($user->avatar)
                     <img src="{{ asset($user->avatar) }}" class="profile-page-avatar " alt="profile avatar">
                 @else
-                    <img src="{{ asset('/images/avatar.jpg') }}" class="profile-page-avatar " alt="profile avatar">
+                    <img src="{{ asset($avatar) }}" class="profile-page-avatar " alt="profile avatar">
                 @endif
 
             </div>
         </div>
 
         <form
-            action="{{ route('profile.update', ['id' => $user->id]) }}"
+            action="{{ route('user.update', ['id' => $user->id]) }}"
             method="POST"
             class="d-flex align-items-start justify-content-start flex-column w-100 mt-5"
             enctype="multipart/form-data"
@@ -64,7 +64,7 @@
             </div>
             <div class="d-flex flex-row justify-content-between w-100">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('profile', ['id' => $user->id]) }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('user.get', ['id' => $user->id]) }}" class="btn btn-danger">Cancel</a>
             </div>
         </form>
     </div>

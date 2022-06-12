@@ -18,7 +18,7 @@
                     <h3> {{ $user->name }} </h3>
 
                     @can ('update-profile', $user )
-                        <a href="{{ route('profile.edit', ['id' => $user->id]) }}" class="btn btn-success">Edit profile</a>
+                        <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-success">Edit profile</a>
                     @endcan
 
                 </div>
@@ -29,7 +29,7 @@
                     <li class="nav-item">
                         <a
                             class="nav-link @if($dataToDisplay === 'threads') active @endif"
-                            href="{{ route('profile', ['id' => $user->id, 'data-to-display' => 'threads']) }}"
+                            href="{{ route('user.get', ['id' => $user->id, 'data-to-display' => 'threads']) }}"
                         >
                             Threads posted
                         </a>
@@ -37,7 +37,7 @@
                     <li class="nav-item">
                         <a
                             class="nav-link @if($dataToDisplay === 'comments') active @endif"
-                            href="{{ route('profile', ['id' => $user->id, 'data-to-display' => 'comments']) }}"
+                            href="{{ route('user.get', ['id' => $user->id, 'data-to-display' => 'comments']) }}"
                         >
                             Comments posted
                         </a>

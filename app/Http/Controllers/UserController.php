@@ -65,12 +65,14 @@ class UserController extends Controller
         $user->save();
 
         return redirect()
-            ->route('profile', ['id' => $user->id])
+            ->route('user.get', ['id' => $user->id])
             ->with('profile-update-success', 'Profile has been updated successful');
     }
 
     public function list()
     {
-        return view('user.list');
+        $users = User::all();
+
+        return view('user.list', ['users' => $users]);
     }
 }

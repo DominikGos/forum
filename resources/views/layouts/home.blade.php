@@ -24,8 +24,12 @@
 
                     @if (Auth::check())
                         <li class="nav-item">
-                            <a href="{{ route('profile', ['id' => Auth::id(), 'data-to-display' => 'threads']) }}"
+                            <a href="{{ route('user.get', ['id' => Auth::id(), 'data-to-display' => 'threads']) }}"
                                 class="nav-link">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.list') }}"
+                                class="nav-link">Users</a>
                         </li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}" class="">

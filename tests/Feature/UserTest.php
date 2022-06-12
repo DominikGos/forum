@@ -17,7 +17,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->get(route('profile', ['id' => $user->id]));
+        $response = $this->get(route('user.get', ['id' => $user->id]));
 
         $response->assertStatus(200)
             ->assertViewIs('user.get')
@@ -32,7 +32,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->get(route('profile.edit', ['id' => $user->id]));
+            ->get(route('user.edit', ['id' => $user->id]));
 
         $response->assertStatus(200)
             ->assertViewIs('user.edit');
@@ -46,13 +46,13 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($user)
             ->put(
-                route('profile.update', ['id' => $user->id]),
+                route('user.update', ['id' => $user->id]),
                 [
                     'name' => $updatedUser->name,
                 ]
             );
 
-        $response->assertRedirect(route('profile', ['id' => $user->id]))
+        $response->assertRedirect(route('user.get', ['id' => $user->id]))
             ->assertSessionHas('profile-update-success')
             ->assertSessionHasNoErrors();
     }
@@ -67,7 +67,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($secondUser)
             ->put(
-                route('profile.update', ['id' => $firstUser->id]),
+                route('user.update', ['id' => $firstUser->id]),
                 [
                     'name' => $updatedFirstUser->name,
                 ]
