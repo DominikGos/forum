@@ -42,7 +42,11 @@ class TopicController extends Controller
     {
         $topic = Topic::with(['user', 'topicComments.user', 'topicComments.topicCommentFiles'])->find($id);
 
-        $numberOfComments = $topic->topicComments->count();
+        $numberOfComments = 0;
+
+        if($topic) {
+            $numberOfComments = $topic->topicComments->count();
+        }
 
         return view('topic', [
             'topic' => $topic,

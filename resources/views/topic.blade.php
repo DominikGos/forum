@@ -1,6 +1,9 @@
 @extends('layouts.home')
 
 @section('content')
+
+@if ( $topic )
+
     <div class="main-section d-flex w-100 justify-content-center p-3 pt-5">
         <div class="main-section__element d-flex align-items-center justify-content-center flex-column gap-3 mt-3 w-50">
 
@@ -20,9 +23,11 @@
 
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+
                     @foreach ( $errors->all() as $error )
                         {{ $error }}
                     @endforeach
+
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -92,4 +97,11 @@
 
         </div>
     </div>
+
+@else
+
+    <x-not-found-alert/>
+
+@endif
+
 @endsection

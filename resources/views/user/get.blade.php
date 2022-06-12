@@ -2,6 +2,8 @@
 
 @section('content')
 
+@if ( $user )
+
     <div class="d-flex main-section justify-content-center p-3 pt-5">
         <div class="main-section__element flex-column d-flex gap-3 mt-3 w-50">
             <div class="d-flex flex-column justify-content-center align-items-center fs-5 w-100 gap-3">
@@ -74,5 +76,12 @@
             </div>
         </div>
     </div>
+
+@else
+
+    <x-not-found-alert/>
+
+@endif
+
 
 @endsection
