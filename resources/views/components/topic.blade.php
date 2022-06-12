@@ -79,7 +79,5 @@
             @endcan
 
         </div>
-
-
     </div>
 </div>

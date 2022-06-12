@@ -20,7 +20,7 @@ class UserTest extends TestCase
         $response = $this->get(route('profile', ['id' => $user->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('user.profile')
+            ->assertViewIs('user.get')
             ->assertViewHasAll([
                 'user',
                 'dataToDisplay',
@@ -35,7 +35,7 @@ class UserTest extends TestCase
             ->get(route('profile.edit', ['id' => $user->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('user.profile-edit');
+            ->assertViewIs('user.edit');
     }
 
     public function test_user_can_update_own_profile()

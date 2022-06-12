@@ -31,7 +31,7 @@ class UserController extends Controller
             $userComments = TopicComment::with(['user', 'topicCommentFiles', 'topic'])->where('user_id', $id)->get();
         }
 
-        return view('user.profile', [
+        return view('user.get', [
             'user' => $user,
             'dataToDisplay' => $dataToDisplay,
             'userComments' => $userComments
@@ -45,7 +45,7 @@ class UserController extends Controller
             $user = User::find($id)
         );
 
-        return view('user.profile-edit', ['user' => $user]);
+        return view('user.edit', ['user' => $user]);
     }
 
     public function update(UpdateProfile $request, int $id)
@@ -67,5 +67,10 @@ class UserController extends Controller
         return redirect()
             ->route('profile', ['id' => $user->id])
             ->with('profile-update-success', 'Profile has been updated successful');
+    }
+
+    public function list()
+    {
+        return view('user.list');
     }
 }

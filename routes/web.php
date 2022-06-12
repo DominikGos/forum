@@ -20,7 +20,9 @@ Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.
 
 Route::get('/topic/search', 'App\Http\Controllers\Forum\TopicController@search')->name('topic.search');
 
-Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('profile');
+Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')
+    ->where(['id' => '[0-9]+'])
+    ->name('profile');
 
 Route::group([
     'namespace' => 'App\Http\Controllers',
@@ -28,9 +30,11 @@ Route::group([
 ], function() {
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
-    Route::get('/profile/{id}/edit', 'UserController@edit')->name('profile.edit');
+    Route::get('/user/{id}/edit', 'UserController@edit')->name('profile.edit'); //zmień profle na user
 
-    Route::put('/profile/{id}/update', 'UserController@update')->name('profile.update');
+    Route::put('/user/{id}/update', 'UserController@update')->name('profile.update'); //zmień profle na user
+
+    Route::get('/user/list', 'UserController@list')->name('user.list');
 
     Route::group([
         'namespace' => 'Forum',
