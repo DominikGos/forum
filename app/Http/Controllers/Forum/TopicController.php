@@ -32,7 +32,7 @@ class TopicController extends Controller
 
         $topics = Topic::with(['user', 'topicFiles'])->orderBy('id', $order)->get();
 
-        return view('topic-list', [
+        return view('topic.list', [
             'topics' => $topics,
             'numberOfTopics' => count($topics)
         ]);
@@ -48,7 +48,7 @@ class TopicController extends Controller
             $numberOfComments = $topic->topicComments->count();
         }
 
-        return view('topic', [
+        return view('topic.get', [
             'topic' => $topic,
             'numberOfComments' => $numberOfComments
         ]);
@@ -61,7 +61,7 @@ class TopicController extends Controller
             $topic = Topic::find($id)
         );
 
-        return view('topic-edit', ['topic' => $topic]);
+        return view('topic.edit', ['topic' => $topic]);
     }
 
     public function update(UpdateTopic $request, int $id)
@@ -85,7 +85,7 @@ class TopicController extends Controller
 
     public function create()
     {
-        return view('topic-create');
+        return view('topic.create');
     }
 
     public function store(StoreTopic $request)
@@ -140,7 +140,7 @@ class TopicController extends Controller
 
         $topics = Topic::where('name', 'like', "%$searchedTopicName%")->get();
 
-        return view('topic-list', [
+        return view('topic.list', [
             'topics' => $topics,
             'numberOfTopics' => count($topics)
         ]);

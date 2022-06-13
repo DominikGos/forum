@@ -21,7 +21,7 @@ class TopicTest extends TestCase
         $response = $this->get(route('topic.list'));
 
         $response->assertStatus(200)
-            ->assertViewIs('topic-list')
+            ->assertViewIs('topic.list')
             ->assertViewHas(['topics', 'numberOfTopics']);
     }
 
@@ -36,7 +36,7 @@ class TopicTest extends TestCase
         $response = $this->get(route('topic.get', ['id' => $topic->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('topic')
+            ->assertViewIs('topic.get')
             ->assertViewHasAll(['topic', 'numberOfComments']);
     }
 
@@ -48,7 +48,7 @@ class TopicTest extends TestCase
             ->get(route('topic.create'));
 
         $response->assertStatus(200)
-            ->assertViewIs('topic-create');
+            ->assertViewIs('topic.create');
     }
 
     public function test_user_can_create_topic_with_correct_credentials(): void
@@ -135,7 +135,7 @@ class TopicTest extends TestCase
             ->get(route('topic.edit', ['id' => $topic->id]));
 
         $response->assertStatus(200)
-            ->assertViewIs('topic-edit')
+            ->assertViewIs('topic.edit')
             ->assertSessionHasNoErrors();
     }
 
@@ -195,7 +195,7 @@ class TopicTest extends TestCase
 
         $response = $this->get(route('topic.search', ['name' => $searchedTopicName]));
 
-        $response->assertViewIs('topic-list')
+        $response->assertViewIs('topic.list')
             ->assertViewHas(['topics', 'numberOfTopics'])
             ->assertSessionHasNoErrors();
     }
