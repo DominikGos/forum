@@ -20,9 +20,7 @@ Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.
 
 Route::get('/topic/search', 'App\Http\Controllers\Forum\TopicController@search')->name('topic.search');
 
-Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')
-    ->where(['id' => '[0-9]+'])
-    ->name('user.get');
+Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('user.get');
 
 Route::group([
     'namespace' => 'App\Http\Controllers',
@@ -30,9 +28,9 @@ Route::group([
 ], function() {
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
-    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit'); //zmień profle na user
+    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit'); 
 
-    Route::put('/user/{id}/update', 'UserController@update')->name('user.update'); //zmień profle na user
+    Route::put('/user/{id}/update', 'UserController@update')->name('user.update'); 
 
     Route::get('/user/list', 'UserController@list')->name('user.list');
 

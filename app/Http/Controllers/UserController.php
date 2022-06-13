@@ -41,7 +41,7 @@ class UserController extends Controller
     public function edit(int $id)
     {
         Gate::authorize(
-            'update-profile',
+            'userUpdate',
             $user = User::find($id)
         );
 
@@ -51,10 +51,10 @@ class UserController extends Controller
     public function update(UpdateProfile $request, int $id)
     {
         Gate::authorize(
-            'update-profile',
+            'userUpdate',
             $user = User::find($id)
         );
-
+       
         if($request->avatar) {
             $avatarPath = $request->file('avatar')->store('avatar');
         }

@@ -38,12 +38,5 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('update-topic', function(User $user, Topic $topic) {
             return $user->id == $topic->user_id;
         });
-
-        Gate::define('update-profile', function(User $authenticated , User $user) {
-            return $authenticated->id == $user->id
-                                    ? Response::allow()
-                                    : Response::deny('You must be an administrator.');
-        });
-
     }
 }

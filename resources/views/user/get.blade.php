@@ -19,7 +19,7 @@
                 <div class="d-flex flex-row gap-3">
                     <h3> {{ $user->name }} </h3>
 
-                    @can ('update-profile', $user )
+                    @can ('userUpdate', $user )
                         <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-success">Edit profile</a>
                     @endcan
 

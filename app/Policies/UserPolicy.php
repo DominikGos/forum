@@ -15,4 +15,9 @@ class UserPolicy
                     ? Response::allow()
                     : Response::deny('You must be an administrator.');
     }
+
+    public function userUpdate(User $authenticated, User $user)
+    {
+        return $authenticated->id === $user->id;
+    }
 }
