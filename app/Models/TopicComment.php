@@ -17,6 +17,12 @@ class TopicComment extends Model
         'text',
     ];
 
+    protected $with = [
+        'user',
+        'topicCommentFiles'
+    ];
+
+
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }

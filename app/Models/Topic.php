@@ -17,6 +17,12 @@ class Topic extends Model
         'text'
     ];
 
+    protected $with = [
+        'topicComments',
+        'user',
+        'topicFiles'
+    ];
+
     public function topicComments() {
         return $this->hasMany(TopicComment::class);
     }

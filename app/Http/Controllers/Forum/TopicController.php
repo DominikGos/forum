@@ -30,7 +30,7 @@ class TopicController extends Controller
 
         if( ! in_array($sequence, $accessibleSequences)) $order = $accessibleSequences[0];
 
-        $topics = Topic::with(['user', 'topicFiles'])->orderBy('id', $order)->get();
+        $topics = Topic::orderBy('id', $order)->get();
 
         return view('topic.list', [
             'topics' => $topics,
@@ -40,7 +40,7 @@ class TopicController extends Controller
 
     public function get(int $id)
     {
-        $topic = Topic::with(['user', 'topicComments.user', 'topicComments.topicCommentFiles'])->find($id);
+        $topic = Topic::find($id);
 
         $numberOfComments = 0;
 

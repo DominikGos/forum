@@ -12,7 +12,7 @@ class UserPolicy
     use HandlesAuthorization;
 
     public function userList(User $user) {
-        $userRoles = array_column(Auth::user()->userRoles->toArray(), 'role');
+        $userRoles = array_column($user->userRoles->toArray(), 'role');
 
         return in_array('admin', $userRoles)
                     ? Response::allow()
