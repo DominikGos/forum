@@ -28,11 +28,21 @@ Route::group([
 ], function() {
     Route::post('/logout', 'Authentication\LoginController@logout')->name('logout');
 
-    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit'); 
+    Route::group([
+        'prefix' => 'user',
+    ], function() {
+        Route::get('{id}/edit', 'UserController@edit')->name('user.edit');
 
-    Route::put('/user/{id}/update', 'UserController@update')->name('user.update'); 
+        Route::put('{id}/update', 'UserController@update')->name('user.update');
 
-    Route::get('/user/list', 'UserController@list')->name('user.list');
+        Route::get('list', 'UserController@list')
+            ->name('user.list')
+            ->middleware('check.role:'. App\Models\UserRole::ADMIN);
+            
+        /* Route::get('list', 'UserController@list')
+            ->name('user.list')
+            ->middleware('check.role:'. App\Models\UserRole::ADMIN); */
+    });
 
     Route::group([
         'namespace' => 'Forum',

@@ -54,7 +54,7 @@ class UserController extends Controller
             'userUpdate',
             $user = User::find($id)
         );
-       
+
         if($request->avatar) {
             $avatarPath = $request->file('avatar')->store('avatar');
         }
