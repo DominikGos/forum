@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Controllers\Forum;
+namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyTopicComment;
@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TopicCommentController extends Controller
+class CommentController extends Controller
 {
     public function store(StoreTopicComment $request)
     {

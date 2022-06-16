@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('topic/{id}', 'App\Http\Controllers\Forum\TopicController@get')->name('topic.get');
+Route::get('topic/{id}', 'App\Http\Controllers\Topic\Controller@get')->name('topic.get');
 
-Route::get('/', 'App\Http\Controllers\Forum\TopicController@list')->name('topic.list');
+Route::get('/', 'App\Http\Controllers\Topic\Controller@list')->name('topic.list');
 
-Route::get('/topic/search', 'App\Http\Controllers\Forum\TopicController@search')->name('topic.search');
+Route::get('/topic/search', 'App\Http\Controllers\Topic\Controller@search')->name('topic.search');
 
 Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('user.get');
 
@@ -38,34 +38,34 @@ Route::group([
         Route::get('list', 'UserController@list')
             ->name('user.list')
             ->middleware('check.role:'. App\Models\UserRole::ADMIN);
-            
+
         /* Route::get('list', 'UserController@list')
             ->name('user.list')
             ->middleware('check.role:'. App\Models\UserRole::ADMIN); */
     });
 
     Route::group([
-        'namespace' => 'Forum',
+        'namespace' => 'Topic',
         'prefix' => 'topic'
     ], function() {
-        Route::get('{id}/edit', 'TopicController@edit')->name('topic.edit');
+        Route::get('{id}/edit', 'Controller@edit')->name('topic.edit');
 
-        Route::put('{id}/update', 'TopicController@update')->name('topic.update');
+        Route::put('{id}/update', 'Controller@update')->name('topic.update');
 
-        Route::get('create', 'TopicController@create')->name('topic.create');
+        Route::get('create', 'Controller@create')->name('topic.create');
 
-        Route::post('create', 'TopicController@store')->name('topic.store');
+        Route::post('create', 'Controller@store')->name('topic.store');
 
-        Route::delete('{id}/destroy', 'TopicController@destroy')->name('topic.destroy');
+        Route::delete('{id}/destroy', 'Controller@destroy')->name('topic.destroy');
     });
 
     Route::group([
-        'namespace' => 'Forum',
+        'namespace' => 'Topic',
         'prefix' => 'topic-comment'
     ], function() {
-        Route::post('create', 'TopicCommentController@store')->name('topic.comment.store');
+        Route::post('create', 'CommentController@store')->name('topic.comment.store');
 
-        Route::delete('{id}/delete', 'TopicCommentController@destroy')->name('topic.comment.destroy');
+        Route::delete('{id}/delete', 'CommentController@destroy')->name('topic.comment.destroy');
     });
 });
 

@@ -25,8 +25,8 @@
             <div class="d-flex w-100 justify-content-between align-items-center fs-5 gap-3">
                 Number of threads: {{ $numberOfTopics }}
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{ route('topic.list', ['order' => 'desc']) }}" class="btn btn-primary fs-5">Latest</a>
-                    <a href="{{ route('topic.list', ['order' => 'asc']) }}" class="btn btn-primary fs-5">Oldest</a>
+                    <a href="{{ route('topic.list', ['sequence' => 'desc']) }}" class="btn btn-primary fs-5">Latest</a>
+                    <a href="{{ route('topic.list', ['sequence' => 'asc']) }}" class="btn btn-primary fs-5">Oldest</a>
                 </div>
             </div>
 
