@@ -1,3 +1,5 @@
+
+
 @extends('layouts.home')
 
 @section('content')
@@ -30,7 +32,7 @@
                 <ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
                         <a
-                            class="nav-link @if($dataToDisplay === 'threads') active @endif"
+                            class="nav-link @if($userPostedResourcesName == 'threads') active @endif"
                             href="{{ route('user.get', ['id' => $user->id, 'data-to-display' => 'threads']) }}"
                         >
                             Threads posted
@@ -38,7 +40,7 @@
                     </li>
                     <li class="nav-item">
                         <a
-                            class="nav-link @if($dataToDisplay === 'comments') active @endif"
+                            class="nav-link @if($userPostedResourcesName == 'comments') active @endif"
                             href="{{ route('user.get', ['id' => $user->id, 'data-to-display' => 'comments']) }}"
                         >
                             Comments posted
@@ -48,15 +50,15 @@
             </div>
             <div class="d-flex flex-column w-100 gap-5 mt-4">
 
-                @if($dataToDisplay === 'threads')
+                @if($userPostedResourcesName == 'threads')
 
-                    @foreach ($user->topics as $topic)
+                    @foreach ($userPostedResources as $topic)
                         <x-topic :topic="$topic" :displayVisitButton="true" :displayHeader="true"/>
                     @endforeach
 
-                @else
+                @elseif($userPostedResourcesName == 'comments')
 
-                    @foreach ($userComments as $comment)
+                    @foreach ($userPostedResources as $comment)
                         <div class="d-flex justify-content-between align-items-center fs-5 w-100 gap-3 mt-5">
                             <a
                                 class="btn btn-primary"

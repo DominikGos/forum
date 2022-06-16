@@ -13,7 +13,7 @@
 <body class="d-flex flex-column justify-content-between vh-100">
     <nav class="main-navbar navbar navbar-expand-sm navbar-dark bg-dark p-2  position-fixed top-0 start-0 w-100">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">Forum</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><i class="fab fa-laravel"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

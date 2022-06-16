@@ -6,35 +6,39 @@ use App\Http\Requests\UpdateProfile;
 use App\Models\Topic;
 use App\Models\TopicComment;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+    private const TOPIC_FILES_PATH = 'topic';
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function get(Request $request, int $id)
     {
-        $user = User::with(['topics.user', 'topics.topicFiles'])->find($id);
+        $user = User::find($id);
 
-        $userComments = [];
+        $userPostedResourcesName = null;
+        $userPostedResources = null;
+        
+        if($user)
+        {
+            $userPostedResourcesName = $this->userService->userPostedResourcesName($request->get('data-to-display'));
 
-        $availableData = [
-            'threads',
-            'comments'
-        ];
-
-        $dataToDisplay = $request->get('data-to-display');
-
-        if( ! in_array($dataToDisplay, $availableData)) $dataToDisplay = $availableData[0];
-
-        if($dataToDisplay === $availableData[1]) {
-            $userComments = TopicComment::with(['user', 'topicCommentFiles', 'topic'])->where('user_id', $id)->get();
+            $userPostedResources = $this->userService->userPostedResources($userPostedResourcesName, $id);
         }
 
         return view('user.get', [
             'user' => $user,
-            'dataToDisplay' => $dataToDisplay,
-            'userComments' => $userComments
+            'userPostedResourcesName' => $userPostedResourcesName,
+            'userPostedResources' => $userPostedResources
         ]);
     }
 

@@ -76,13 +76,14 @@ class TopicTest extends TestCase
 
         $response = $this->actingAs($user)
             ->post(route('topic.store', [
-                'user_id' => null,
                 'name' => null,
                 'text' => null,
             ]));
 
-        $response->assertRedirect(route('home'))
-            ->assertSessionHasErrors(['name']);
+        $response->assertRedirect(route('topic.create'))
+            ->assertSessionHasErrors('name');
+        /* $response->assertRedirect(route('topic.create'))
+            ->assertSessionHasErrors('name'); */
     }
 
     public function test_user_can_delete_own_topic(): void

@@ -26,7 +26,7 @@ class RegisterTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('register.form'));
 
-        $response->assertRedirect(RegisterTest::HOME);
+        $response->assertRedirect(route('home'));
     }
 
     public function test_user_can_register_with_correct_credentials(): void

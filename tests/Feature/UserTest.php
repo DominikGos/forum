@@ -23,7 +23,8 @@ class UserTest extends TestCase
             ->assertViewIs('user.get')
             ->assertViewHasAll([
                 'user',
-                'dataToDisplay',
+                'userPostedResourcesName',
+                'userPostedResources',
             ]);
     }
 

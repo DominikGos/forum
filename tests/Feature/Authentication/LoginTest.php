@@ -27,7 +27,7 @@ class LoginTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('login.form'));
 
-        $response->assertRedirect(LoginTest::HOME);
+        $response->assertRedirect(route('home'));
     }
 
     public function test_user_can_login_with_correct_credentials(): void
@@ -43,7 +43,7 @@ class LoginTest extends TestCase
             'password' => PASSWORD
         ]);
 
-        $response->assertRedirect('/')->assertSessionHasNoErrors();
+        $response->assertRedirect(route('home'))->assertSessionHasNoErrors();
 
         $this->assertAuthenticatedAs($user);
     }
