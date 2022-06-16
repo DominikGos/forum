@@ -9,6 +9,7 @@ use App\Http\Requests\DestroyTopicComment;
 use App\Http\Requests\StoreTopicComment;
 use App\Models\TopicComment;
 use App\Models\TopicCommentFile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,8 @@ class TopicCommentController extends Controller
         $topicCommentId = TopicComment::insertGetId([
             'user_id' => Auth::id(),
             'topic_id' => $request->topic_id,
-            'text' => $request->text
+            'text' => $request->text,
+            'created_at' => Carbon::now(),
         ]);
 
         foreach($request->file('files') ?? [] as $file) {

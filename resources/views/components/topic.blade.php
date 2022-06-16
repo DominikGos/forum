@@ -13,7 +13,7 @@
             {{ $topic->user->name }}
         </a>
         <p class="m-0 p-0">
-            {{ $readableDate }}
+            @redableDate($topic->created_at)
 
             @if ( $topic->updated )
                 <strong>

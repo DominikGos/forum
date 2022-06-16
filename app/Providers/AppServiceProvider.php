@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->share('avatar', '/images/avatar.jpg');
+
+        Blade::directive('redableDate', function ($date) {
+            return "<?php
+                echo $date
+                    ? Carbon\Carbon::parse($date)->format('H:i  M d, Y ')
+                    : null;
+            ?>";
+        });
     }
 }

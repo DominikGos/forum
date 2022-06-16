@@ -12,7 +12,9 @@
             </div>
             {{ $comment->user->name }}
         </a>
-        <p class="m-0 p-0">{{ $readableDate }}</p>
+        <p class="m-0 p-0">
+            @redableDate($comment->created_at)
+        </p>
     </div>
     <div class="card-body">
         <p class="card-text">{{ $comment->text }}</p>
