@@ -33,7 +33,7 @@
             @endif
 
             <div class="d-flex justify-content-between align-items-center fs-5 w-100 gap-3">
-                <a class="btn btn-primary" href="/">Forum</a>
+                <a class="btn btn-primary" href="{{ route('home') }}">Forum</a>
                 <h3>
                     {{ $topic->name }}
                 </h3>

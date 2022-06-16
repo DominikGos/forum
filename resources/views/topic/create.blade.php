@@ -65,7 +65,7 @@
                 </div>
                 <div class="d-flex flex-row justify-content-between w-100">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="submit" class="btn btn-danger">Cancel</button>
+                    <a href="{{ route('home') }}" class="btn btn-danger">Cancel</a>
                 </div>
             </form>
         </div>

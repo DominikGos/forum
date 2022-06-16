@@ -13,7 +13,7 @@
 <body class="d-flex flex-column justify-content-between vh-100">
     <nav class="main-navbar navbar navbar-expand-sm navbar-dark bg-dark p-2  position-fixed top-0 start-0 w-100">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Forum</a>
+            <a class="navbar-brand" href="{{ route('home') }}">Forum</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
 
     <footer class="py-3 bg-white mt-3">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>

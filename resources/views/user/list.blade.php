@@ -5,7 +5,7 @@
     <div class="d-flex main-section justify-content-center p-3 pt-5">
         <div class="main-section__element flex-column d-flex gap-3 mt-3 w-50">
             <div class="d-flex justify-content-between align-items-center fs-5 w-100 gap-3">
-                <a class="btn btn-primary" href="/">Forum</a>
+                <a class="btn btn-primary" href="{{ route('home') }}">Forum</a>
                 <h3>User list.</h3>
             </div>
 

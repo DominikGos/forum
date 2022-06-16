@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('topic/{id}', 'App\Http\Controllers\Topic\Controller@get')->name('topic.get');
-
-Route::get('/', 'App\Http\Controllers\Topic\Controller@list')->name('topic.list');
-
-Route::get('/topic/search', 'App\Http\Controllers\Topic\Controller@search')->name('topic.search');
 
 Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('user.get');
+
+Route::group([
+    'namespace' => 'App\Http\Controllers\Topic',
+    'prefix' => 'topic'
+], function() {
+    Route::get('list', 'Controller@list')->name('home');
+
+    Route::get('{id}', 'Controller@get')->name('topic.get');
+
+    Route::get('search', 'Controller@search')->name('topic.search');
+});
 
 Route::group([
     'namespace' => 'App\Http\Controllers',
@@ -30,42 +36,39 @@ Route::group([
 
     Route::group([
         'prefix' => 'user',
+        'as' => 'user.'
     ], function() {
-        Route::get('{id}/edit', 'UserController@edit')->name('user.edit');
+        Route::get('{id}/edit', 'UserController@edit')->name('edit');
 
-        Route::put('{id}/update', 'UserController@update')->name('user.update');
+        Route::put('{id}/update', 'UserController@update')->name('update');
 
-        Route::get('list', 'UserController@list')
-            ->name('user.list')
-            ->middleware('check.role:'. App\Models\UserRole::ADMIN);
-
-        /* Route::get('list', 'UserController@list')
-            ->name('user.list')
-            ->middleware('check.role:'. App\Models\UserRole::ADMIN); */
+        Route::get('list', 'UserController@list')->name('list');
     });
 
     Route::group([
         'namespace' => 'Topic',
-        'prefix' => 'topic'
+        'prefix' => 'topic',
+        'as' => 'topic.'
     ], function() {
-        Route::get('{id}/edit', 'Controller@edit')->name('topic.edit');
+        Route::get('{id}/edit', 'Controller@edit')->name('edit');
 
-        Route::put('{id}/update', 'Controller@update')->name('topic.update');
+        Route::put('{id}/update', 'Controller@update')->name('update');
 
-        Route::get('create', 'Controller@create')->name('topic.create');
+        Route::get('create', 'Controller@create')->name('create');
 
-        Route::post('create', 'Controller@store')->name('topic.store');
+        Route::post('create', 'Controller@store')->name('store');
 
-        Route::delete('{id}/destroy', 'Controller@destroy')->name('topic.destroy');
+        Route::delete('{id}/destroy', 'Controller@destroy')->name('destroy');
     });
 
     Route::group([
         'namespace' => 'Topic',
-        'prefix' => 'topic-comment'
+        'prefix' => 'topic-comment',
+        'as' => 'topic.comment.'
     ], function() {
-        Route::post('create', 'CommentController@store')->name('topic.comment.store');
+        Route::post('create', 'CommentController@store')->name('store');
 
-        Route::delete('{id}/delete', 'CommentController@destroy')->name('topic.comment.destroy');
+        Route::delete('{id}/delete', 'CommentController@destroy')->name('destroy');
     });
 });
 

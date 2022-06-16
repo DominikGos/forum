@@ -26,7 +26,7 @@
 
                     <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
                         @yield('message')
-                        <a class="btn btn-primary" href="/">Forum</a>
+                        <a class="btn btn-primary" href="{{ route('home') }}">Forum</a>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class TopicTest extends TestCase
 
     public function test_user_can_get_all_topics(): void
     {
-        $response = $this->get(route('topic.list'));
+        $response = $this->get(route('home'));
 
         $response->assertStatus(200)
             ->assertViewIs('topic.list')
@@ -66,7 +66,7 @@ class TopicTest extends TestCase
                 'text' => $topic->text,
             ]));
 
-        $response->assertRedirect(route('topic.list'))
+        $response->assertRedirect(route('home'))
             ->assertSessionHas('topic-create-success');
     }
 
@@ -81,7 +81,7 @@ class TopicTest extends TestCase
                 'text' => null,
             ]));
 
-        $response->assertRedirect(route('topic.list'))
+        $response->assertRedirect(route('home'))
             ->assertSessionHasErrors(['name']);
     }
 
@@ -99,7 +99,7 @@ class TopicTest extends TestCase
                 'id' => $topic->id,
             ]));
 
-        $response->assertRedirect(route('topic.list'))
+        $response->assertRedirect(route('home'))
             ->assertSessionHas(['topic-delete-success']);
     }
 

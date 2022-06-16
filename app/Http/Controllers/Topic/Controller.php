@@ -5,12 +5,10 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller as BasicController;
-use App\Http\Requests\DestroyTopic;
 use App\Http\Requests\SearchTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
 use App\Models\Topic;
-use App\Models\TopicComment;
 use App\Models\TopicFile;
 use App\Services\TopicCommentService;
 use App\Services\TopicService;
@@ -24,7 +22,7 @@ class Controller extends BasicController
 {
     private TopicService $topicService;
     private TopicCommentService $topicCommentService;
-    private const TOPIC_FILES_PATHS = 'topic';
+    private const TOPIC_FILES_PATH = 'topic';
 
     public function __construct(TopicService $topicService, TopicCommentService $topicCommentService)
     {
@@ -105,7 +103,7 @@ class Controller extends BasicController
         ]);
 
         foreach($request->file('files') ?? [] as $file) {
-            $path = $file->store(self::TOPIC_FILES_PATHS);
+            $path = $file->store(self::TOPIC_FILES_PATH);
 
             TopicFile::create([
                 'topic_id' => $topicId,
@@ -114,10 +112,10 @@ class Controller extends BasicController
             ]);
         }
 
-        return redirect()->route('topic.list')->with('topic-create-success', 'The thread has been created successful');
+        return redirect()->route('home')->with('topic-create-success', 'The thread has been created successful');
     }
 
-    public function destroy(DestroyTopic $request, int $id)
+    public function destroy(int $id)
     {
         Gate::authorize(
             'delete-topic',
@@ -134,7 +132,7 @@ class Controller extends BasicController
         }
 
         return redirect()
-            ->route('topic.list')
+            ->route('home')
             ->with('topic-delete-success', 'Topic has been removed successful');
     }
 
