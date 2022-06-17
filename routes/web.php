@@ -85,3 +85,6 @@ Route::group([
     Route::post('/register', 'RegisterController@register')->name('register');
 });
 
+Route::fallback(function() {
+    return redirect()->route('home');
+});
