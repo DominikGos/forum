@@ -8,6 +8,7 @@ use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('update-topic', function(User $user, Topic $topic) {
             return $user->id == $topic->user_id;
+        });
+
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return route('password.reset.form', ['token' => $token]);
         });
     }
 }

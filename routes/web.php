@@ -3,6 +3,16 @@
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
+
+
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,6 +93,14 @@ Route::group([
     Route::get('/register', 'RegisterController@showForm')->name('register.form');
 
     Route::post('/register', 'RegisterController@register')->name('register');
+
+    Route::get('/forgot-password', 'ResetPasswordController@forgotPasswordForm')->name('password.request');
+
+    Route::post('/forgot-password', 'ResetPasswordController@resetLink')->name('password.reset.link');
+
+    Route::get('/reset-password/{token}', 'ResetPasswordController@resetPasswordForm')->name('password.reset.form');
+
+    Route::post('/reset-password', 'ResetPasswordController@updatePassword')->name('password.reset');
 });
 
 Route::fallback(function() {
