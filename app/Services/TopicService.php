@@ -5,10 +5,14 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Models\Topic;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\File;
 
-class TopicService
+class TopicService extends ForumService
 {
+    private const TOPIC_FILES_PATH = 'topic';
+
     public function listSequence(?string $sequence): ?string
     {
         $accessibleSequences = [
@@ -21,12 +25,24 @@ class TopicService
             : $accessibleSequences[0];
     }
 
-    public function destroyFiles(Topic $topic)
+    public function store(array $data)
     {
-        $topicFilesPaths = array_column($topic->files->toArray(), 'path');
+        $topicId = Topic::insertGetId([
+            'user_id' => Auth::id(),
+            'name' => $data['name'],
+            'text' => $data['text'],
+            'created_at' => Carbon::now()
+        ]);
 
-        Storage::delete($topicFilesPaths);
+        foreach($data['files'] ?? [] as $file)
+        {
+            $path = $file->store(self::TOPIC_FILES_PATH);
 
-        $topic->delete();
+            File::create([
+                'fileable_id' => $topicId,
+                'fileable_type' => Topic::class,
+                'path' => $path
+            ]);
+        }
     }
 }

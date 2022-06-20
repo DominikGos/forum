@@ -4,17 +4,34 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Models\File;
 use App\Models\TopicComment;
-use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
-class TopicCommentService
+class TopicCommentService extends ForumService
 {
-    public function destroyFiles(TopicComment $comment)
+    private const TOPIC_COMMENT_FILES_PATH = 'topic-comment';
+
+    public function store(array $data)
     {
-        $topicCommentFilesPaths = array_column($comment->files->toArray(), 'path');
+        $topicCommentId = TopicComment::insertGetId([
+            'user_id' => Auth::id(),
+            'topic_id' => $data['topic_id'],
+            'text' => $data['text'],
+            'created_at' => Carbon::now(),
+        ]);
 
-        Storage::delete($topicCommentFilesPaths);
+        foreach($data['files'] ?? [] as $file)
+        {
+            $path = $file->store(self::TOPIC_COMMENT_FILES_PATH);
 
-        $comment->delete();
+            File::create([
+                'fileable_id' => $topicCommentId,
+                'fileable_type' => TopicComment::class,
+                'path' => $path
+            ]);
+        }
     }
+
 }

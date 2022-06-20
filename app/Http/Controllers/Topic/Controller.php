@@ -8,22 +8,17 @@ use App\Http\Controllers\Controller as BasicController;
 use App\Http\Requests\SearchTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
-use App\Models\File;
 use App\Models\Topic;
-use App\Models\TopicFile;
 use App\Services\TopicCommentService;
 use App\Services\TopicService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 
 class Controller extends BasicController
 {
     private TopicService $topicService;
     private TopicCommentService $topicCommentService;
-    private const TOPIC_FILES_PATH = 'topic';
 
     public function __construct(TopicService $topicService, TopicCommentService $topicCommentService)
     {
@@ -96,22 +91,7 @@ class Controller extends BasicController
 
     public function store(StoreTopic $request)
     {
-        $topicId = Topic::insertGetId([
-            'user_id' => Auth::id(),
-            'name' => $request->name,
-            'text' => $request->text,
-            'created_at' => Carbon::now()
-        ]);
-
-        foreach($request->file('files') ?? [] as $file) {
-            $path = $file->store(self::TOPIC_FILES_PATH);
-
-            File::create([
-                'fileable_id' => $topicId,
-                'fileable_type' => Topic::class,
-                'path' => $path
-            ]);
-        }
+        $this->topicService->store($request->all());
 
         return redirect()->route('home')->with('topic-create-success', 'The thread has been created successful');
     }

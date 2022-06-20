@@ -9,27 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
-    private array $availableUserPostedResources = [
+    private static array $availableUserPostedResources = [
         'threads' => 'threads',
         'comments' => 'comments'
     ];
 
     public function userPostedResourcesName(?string $resourcesName): string
     {
-        return in_array($resourcesName, $this->availableUserPostedResources)
+        return in_array($resourcesName, self::$availableUserPostedResources)
                     ? $resourcesName
-                    : $this->availableUserPostedResources['threads'];
+                    : self::$availableUserPostedResources['threads'];
     }
 
     public function userPostedResources(string $resourcesName, int $userId)
     {
-        if($resourcesName == $this->availableUserPostedResources['threads'])
-        {
-            return User::find($userId)->topics;
+        switch ($resourcesName) {
+            case self::$availableUserPostedResources['threads']:
+                return User::find($userId)->topics;
+                break;
+
+            case self::$availableUserPostedResources['comments']:
+                return User::find($userId)->userComments;
+                break;
         }
-        elseif($resourcesName == $this->availableUserPostedResources['comments'])
-        {
-            return User::find($userId)->userComments;
-        }
+        
     }
 }
