@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller as BasicController;
 use App\Http\Requests\SearchTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
+use App\Models\File;
 use App\Models\Topic;
 use App\Services\TopicCommentService;
 use App\Services\TopicService;
@@ -72,6 +73,8 @@ class Controller extends BasicController
             $topic = Topic::find($id)
         );
 
+        $this->topicService->destroyFiles(File::whereIn('id', $request->fileToDeleteIds)->get());
+
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;
         $topic->updated = true;
@@ -106,10 +109,10 @@ class Controller extends BasicController
         if($topic)
         {
             foreach($topic->topicComments as $comment) {
-                $this->topicCommentService->destroyFiles($comment);
+                $this->topicCommentService->destroyForumResource($comment);
             }
 
-            $this->topicService->destroyFiles($topic);
+            $this->topicService->destroyForumResource($topic);
         }
 
         return redirect()

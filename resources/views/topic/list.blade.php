@@ -14,6 +14,15 @@
 
             @endif
 
+            @if (session('topic-delete-success'))
+
+                <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                    {{ session('topic-delete-success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            @endif
+
             <div class="d-flex w-100 align-items-center fs-5 gap-3">
                 Threads
 

@@ -29,9 +29,9 @@ class UserService
                 break;
 
             case self::$availableUserPostedResources['comments']:
-                return User::find($userId)->userComments;
+                return TopicComment::where('user_id', $userId)->get();
                 break;
         }
-        
+
     }
 }

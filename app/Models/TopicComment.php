@@ -30,10 +30,6 @@ class TopicComment extends Model
         return $this->belongsTo(Topic::class);
     }
 
-   /*  public function topicCommentFiles() {
-        return $this->hasMany(TopicCommentFile::class);
-    } */
-
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');

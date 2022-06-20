@@ -33,7 +33,7 @@ class CommentController extends Controller
 
         if($topicComment)
         {
-            $this->topicCommentService->destroyFiles($topicComment);
+            $this->topicCommentService->destroyForumResource($topicComment);
             $topicComment->delete();
         }
 

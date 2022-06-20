@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
-use App\Models\Topic;
-use App\Models\TopicComment;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     private UserService $userService;
-    private const TOPIC_FILES_PATH = 'topic';
+    private const AVATAR_PATH = 'avatar';
 
     public function __construct(UserService $userService)
     {
@@ -27,7 +24,7 @@ class UserController extends Controller
 
         $userPostedResourcesName = null;
         $userPostedResources = null;
-        
+
         if($user)
         {
             $userPostedResourcesName = $this->userService->userPostedResourcesName($request->get('data-to-display'));
@@ -60,7 +57,7 @@ class UserController extends Controller
         );
 
         if($request->avatar) {
-            $avatarPath = $request->file('avatar')->store('avatar');
+            $avatarPath = $request->file('avatar')->store(self::AVATAR_PATH);
         }
 
         $user->name = $request->name ?? $user->name;

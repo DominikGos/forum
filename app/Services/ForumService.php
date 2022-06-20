@@ -4,24 +4,29 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Models\File;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 
 abstract class ForumService
 {
     abstract public function store(array $data);
 
-    public function destroyFiles(object $forumResource)
+    public function destroyForumResource(object $forumResource)
     {
-        $files = $forumResource->files;
+        $this->destroyFiles($forumResource->files);
 
-        $forumResourceFilesPaths = array_column($files->toArray(), 'path');
+        $forumResource->delete();
+    }
 
-        Storage::delete($forumResourceFilesPaths);
+    public function destroyFiles(Collection $files)
+    {
+        $filesPaths = array_column($files->toArray(), 'path');
+
+        Storage::delete($filesPaths);
 
         foreach($files as $file) {
             $file->delete();
         }
-
-        $forumResource->delete();
     }
 }
