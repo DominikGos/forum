@@ -20,7 +20,6 @@ class Topic extends Model
     protected $with = [
         'topicComments',
         'user',
-        'topicFiles'
     ];
 
     public function topicComments() {
@@ -31,7 +30,12 @@ class Topic extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function topicFiles() {
+    /* public function topicFiles() {
         return $this->hasMany(TopicFile::class);
+    } */
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 }

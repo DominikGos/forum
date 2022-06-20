@@ -19,7 +19,6 @@ class TopicComment extends Model
 
     protected $with = [
         'user',
-        'topicCommentFiles'
     ];
 
 
@@ -31,7 +30,12 @@ class TopicComment extends Model
         return $this->belongsTo(Topic::class);
     }
 
-    public function topicCommentFiles() {
+   /*  public function topicCommentFiles() {
         return $this->hasMany(TopicCommentFile::class);
+    } */
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 }

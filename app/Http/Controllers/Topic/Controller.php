@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller as BasicController;
 use App\Http\Requests\SearchTopic;
 use App\Http\Requests\StoreTopic;
 use App\Http\Requests\UpdateTopic;
+use App\Models\File;
 use App\Models\Topic;
 use App\Models\TopicFile;
 use App\Services\TopicCommentService;
@@ -105,9 +106,9 @@ class Controller extends BasicController
         foreach($request->file('files') ?? [] as $file) {
             $path = $file->store(self::TOPIC_FILES_PATH);
 
-            TopicFile::create([
-                'topic_id' => $topicId,
-                'user_id' => Auth::id(),
+            File::create([
+                'fileable_id' => $topicId,
+                'fileable_type' => Topic::class,
                 'path' => $path
             ]);
         }

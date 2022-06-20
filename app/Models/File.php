@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TopicFile extends Model
+class File extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'topic_id',
-        'user_id',
-        'path'
+        'fileable_id',
+        'fileable_type',
+        'path',
     ];
+
+    public function fileable()
+    {
+        return $this->morphTo();
+    }
 }

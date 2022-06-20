@@ -11,7 +11,7 @@ class TopicCommentService
 {
     public function destroyFiles(TopicComment $comment)
     {
-        $topicCommentFilesPaths = array_column($comment->topicCommentFiles->toArray(), 'path');
+        $topicCommentFilesPaths = array_column($comment->files->toArray(), 'path');
 
         Storage::delete($topicCommentFilesPaths);
 

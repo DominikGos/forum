@@ -19,12 +19,12 @@
     <div class="card-body">
         <p class="card-text">{{ $comment->text }}</p>
 
-        @if( count($comment->topicCommentFiles) > 0)
+        @if( count($comment->files) > 0)
             <div class="d-flex v-100 flex-row gap-2 p-3 flex-wrap">
 
-                @foreach ( $comment->topicCommentFiles as $file )
+                @foreach ( $comment->files as $file )
 
-                    @if ( count($comment->topicCommentFiles) > 1 )
+                    @if ( count($comment->files) > 1 )
                         <div class="d-flex justify-content-center align-items-center topic-with-many-files">
                             <img src="{{ asset($file->path) }}" class="rounded mw-100 mh-100" alt="Topic file">
                         </div>

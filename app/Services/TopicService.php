@@ -23,7 +23,7 @@ class TopicService
 
     public function destroyFiles(Topic $topic)
     {
-        $topicFilesPaths = array_column($topic->topicFiles->toArray(), 'path');
+        $topicFilesPaths = array_column($topic->files->toArray(), 'path');
 
         Storage::delete($topicFilesPaths);
 

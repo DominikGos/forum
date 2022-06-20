@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Topic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyTopicComment;
 use App\Http\Requests\StoreTopicComment;
+use App\Models\File;
 use App\Models\TopicComment;
 use App\Models\TopicCommentFile;
 use Carbon\Carbon;
@@ -37,9 +38,9 @@ class CommentController extends Controller
         {
             $path = $file->store(self::TOPIC_COMMENT_FILES_PATH);
 
-            TopicCommentFile::create([
-                'topic_comment_id' => $topicCommentId,
-                'user_id' => Auth::id(),
+            File::create([
+                'fileable_id' => $topicCommentId,
+                'fileable_type' => TopicComment::class,
                 'path' => $path
             ]);
         }
