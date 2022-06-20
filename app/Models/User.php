@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRole::class);
     }
+
+    public function userComments()
+    {
+        return $this->hasManyThrough(TopicComment::class, Topic::class);
+    }
 }
