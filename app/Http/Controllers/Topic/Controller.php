@@ -73,7 +73,9 @@ class Controller extends BasicController
             $topic = Topic::find($id)
         );
 
-        $this->topicService->destroyFiles(File::whereIn('id', $request->fileToDeleteIds)->get());
+        if($topic->files->isNotEmpty()) {
+            $this->topicService->destroyFiles(File::whereIn('id', $request->fileToDeleteIds)->get());
+        }
 
         $topic->name = $request->name ?? $topic->name;
         $topic->text = $request->text ?? $topic->text;

@@ -82,8 +82,6 @@ class TopicTest extends TestCase
 
         $response->assertRedirect(route('topic.create'))
             ->assertSessionHasErrors('name');
-        /* $response->assertRedirect(route('topic.create'))
-            ->assertSessionHasErrors('name'); */
     }
 
     public function test_user_can_delete_own_topic(): void
@@ -151,6 +149,8 @@ class TopicTest extends TestCase
         $updatedTopic = Topic::factory()
             ->for($user)
             ->make(['id' => $topic->id]);
+
+        //dd($updatedTopic);
 
         $response = $this->actingAs($user)->put(
             route('topic.update', ['id' => $topic->id]),

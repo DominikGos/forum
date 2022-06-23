@@ -40,10 +40,13 @@ class RegisterTest extends TestCase
         $response = $this->post(route('register'), [
             'name' => $user->name,
             'password' => $user->password,
+            'password_confirmation' => $user->password,
             'email' => $user->email
         ]);
 
-        $response->assertRedirect(route('login.form'))->assertSessionHasNoErrors()->assertSessionHas('register-success');
+        $response->assertRedirect(route('login.form'))
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('register-success');
     }
 
     public function test_user_cannot_register_with_incorrect_credentials(): void

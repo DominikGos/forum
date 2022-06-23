@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreTopic extends FormRequest
 {
     protected $stopOnFirstFailure = true;
+    protected $redirectRoute = 'topic.create';
 
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +27,8 @@ class StoreTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3',
-            'text' => 'required|string|min:3',
+            'name' => 'required|string',
+            'text' => 'required|string',
             'files' => 'nullable|array|max:5|min:1',
             'files.*' => 'file|mimes:png,jpg,jpeg',
         ];
