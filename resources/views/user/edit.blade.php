@@ -16,7 +16,12 @@
 
                 </div>
             </div>
-
+            {{-- <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="fileToDeleteIds[]" value="{{ $file->id }}">
+                                        <p class="text-danger">
+                                            Delete
+                                        </p>
+                                    </div> --}}
             <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST"
                 class="d-flex align-items-start justify-content-start flex-column w-100 mt-5" enctype="multipart/form-data">
 
@@ -26,8 +31,8 @@
 
                 <div class="mb-3 w-100">
                     <label for="topic" class="form-label">Profile login</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="topic"
-                        aria-describedby="emailHelp" value="{{ old('name') ?? $user->name }}">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        id="topic" aria-describedby="emailHelp" value="{{ old('name') ?? $user->name }}">
 
                     @error('name')
                         <div class="invalid-feedback">
@@ -49,12 +54,14 @@
                     @enderror
 
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Delete avatar.
-                    </label>
-                </div>
+                @if ($user->avatar)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="deleteAvatar">
+                        <p class="text-danger">
+                            Delete avatar
+                        </p>
+                    </div>
+                @endif
                 <div class="d-flex flex-row justify-content-between w-100 mt-3">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a href="{{ route('user.get', ['id' => $user->id]) }}" class="btn btn-danger">Cancel</a>

@@ -60,6 +60,10 @@ class UserController extends Controller
             $avatarPath = $request->file('avatar')->store(self::AVATAR_PATH);
         }
 
+        if($request->deleteAvatar && $user->avatar) {
+            $user->avatar = null;
+        }
+
         $user->name = $request->name ?? $user->name;
         $user->avatar = $avatarPath ?? $user->avatar;
 

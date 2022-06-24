@@ -34,7 +34,14 @@ class TopicService extends ForumService
             'created_at' => Carbon::now()
         ]);
 
-        foreach($data['files'] ?? [] as $file)
+        if( ! empty($data['files'])) {
+            $this->storeFiles($data['files'], $topicId);
+        }
+    }
+
+    public function storeFiles(array $files, int $topicId)
+    {
+        foreach($files ?? [] as $file)
         {
             $path = $file->store(self::TOPIC_FILES_PATH);
 
@@ -44,5 +51,23 @@ class TopicService extends ForumService
                 'path' => $path
             ]);
         }
+    }
+
+    public function update(Topic $topic, array $data)
+    {
+        if($topic->files->isNotEmpty() && ! empty($data['fileToDeleteIds'])) {
+            $this->destroyFiles(File::whereIn('id', $data['fileToDeleteIds'])->get());
+        }
+
+        if( ! empty($data['files'])) {
+            $this->storeFiles($data['files'], $topic->id);
+        }
+
+        $topic->name = $data['name'] ?? $topic->name;
+        $topic->text = $data['text'] ?? $topic->text;
+        $topic->updated = true;
+        $topic->updated_at = Carbon::now();
+
+        $topic->save();
     }
 }

@@ -73,8 +73,14 @@ class Controller extends BasicController
             $topic = Topic::find($id)
         );
 
-        if($topic->files->isNotEmpty()) {
+        $this->topicService->update($topic, $request->all());
+        
+       /*  if($topic->files->isNotEmpty() && $request->fileToDeleteIds) {
             $this->topicService->destroyFiles(File::whereIn('id', $request->fileToDeleteIds)->get());
+        }
+
+        if($request->file('files')) {
+            $this->topicService->storeFiles($request->file('files'), $id);
         }
 
         $topic->name = $request->name ?? $topic->name;
@@ -82,7 +88,7 @@ class Controller extends BasicController
         $topic->updated = true;
         $topic->updated_at = Carbon::now();
 
-        $topic->save();
+        $topic->save(); */
 
         return redirect()
             ->route('topic.get', ['id' => $id])
@@ -96,7 +102,6 @@ class Controller extends BasicController
 
     public function store(StoreTopic $request)
     {
-        //dd($request);
         $this->topicService->store($request->all());
 
         return redirect()->route('home')->with('topic-create-success', 'The thread has been created successful');
