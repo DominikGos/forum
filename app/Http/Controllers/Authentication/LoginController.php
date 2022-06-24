@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Login;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +16,7 @@ class LoginController extends Controller
         return view('authentication.login');
     }
 
-    public function authenticate(Login $request)
+    public function authenticate(LoginRequest $request)
     {
         $data = [
             'email' => $request->email,

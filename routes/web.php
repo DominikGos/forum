@@ -3,16 +3,6 @@
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
-
-
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,14 +18,14 @@ use Illuminate\Support\Str;
 Route::get('/user/{id}', 'App\Http\Controllers\UserController@get')->name('user.get');
 
 Route::group([
-    'namespace' => 'App\Http\Controllers\Topic',
+    'namespace' => 'App\Http\Controllers',
     'prefix' => 'topic'
 ], function() {
-    Route::get('list', 'Controller@list')->name('home');
+    Route::get('list', 'TopicController@list')->name('home');
 
-    Route::get('{id}', 'Controller@get')->name('topic.get');
+    Route::get('{id}', 'TopicController@get')->name('topic.get');
 
-    Route::get('search', 'Controller@search')->name('topic.search');
+    Route::get('search', 'TopicController@search')->name('topic.search');
 });
 
 Route::group([
@@ -56,29 +46,27 @@ Route::group([
     });
 
     Route::group([
-        'namespace' => 'Topic',
         'prefix' => 'topic',
         'as' => 'topic.'
     ], function() {
-        Route::get('{id}/edit', 'Controller@edit')->name('edit');
+        Route::get('{id}/edit', 'TopicController@edit')->name('edit');
 
-        Route::put('{id}/update', 'Controller@update')->name('update');
+        Route::put('{id}/update', 'TopicController@update')->name('update');
 
-        Route::get('create', 'Controller@create')->name('create');
+        Route::get('create', 'TopicController@create')->name('create');
 
-        Route::post('create', 'Controller@store')->name('store');
+        Route::post('create', 'TopicController@store')->name('store');
 
-        Route::delete('{id}/destroy', 'Controller@destroy')->name('destroy');
+        Route::delete('{id}/destroy', 'TopicController@destroy')->name('destroy');
     });
 
     Route::group([
-        'namespace' => 'Topic',
         'prefix' => 'topic-comment',
         'as' => 'topic.comment.'
     ], function() {
-        Route::post('create', 'CommentController@store')->name('store');
+        Route::post('create', 'TopicCommentController@store')->name('store');
 
-        Route::delete('{id}/delete', 'CommentController@destroy')->name('destroy');
+        Route::delete('{id}/delete', 'TopicCommentController@destroy')->name('destroy');
     });
 });
 

@@ -4,10 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Register extends FormRequest
+class StoreTopicRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
-    protected $redirectRoute = 'register.form';
+    protected $redirectRoute = 'topic.create';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,10 +27,10 @@ class Register extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:8',
-            'email' => 'required|email|string|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|string|min:8',
+            'name' => 'required|string',
+            'text' => 'required|string',
+            'files' => 'nullable|array|max:5|min:1',
+            'files.*' => 'file|mimes:png,jpg,jpeg',
         ];
     }
 }

@@ -4,10 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Login extends FormRequest
+class RegisterRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
-    protected $redirectRoute = 'login.form';
+    protected $redirectRoute = 'register.form';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,9 +26,10 @@ class Login extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|string',
-            'password' => 'required|string',
-            'rememberMe' => 'nullable|boolean'
+            'name' => 'required|string|min:8',
+            'email' => 'required|email|string|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required|string|min:8',
         ];
     }
 }

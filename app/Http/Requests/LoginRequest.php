@@ -4,11 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTopic extends FormRequest
+class LoginRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
-    protected $redirectRoute = 'topic.create';
-
+    protected $redirectRoute = 'login.form';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,10 +26,9 @@ class StoreTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'text' => 'required|string',
-            'files' => 'nullable|array|max:5|min:1',
-            'files.*' => 'file|mimes:png,jpg,jpeg',
+            'email' => 'required|email|string',
+            'password' => 'required|string',
+            'rememberMe' => 'nullable|boolean'
         ];
     }
 }

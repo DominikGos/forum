@@ -2,16 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Controllers\Topic;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DestroyTopicComment;
-use App\Http\Requests\StoreTopicComment;
+use App\Http\Requests\StoreTopicCommentRequest;
 use App\Models\TopicComment;
 use App\Services\TopicCommentService;
 use Illuminate\Support\Facades\Gate;
 
-class CommentController extends Controller
+class TopicCommentController extends Controller
 {
     private TopicCommentService $topicCommentService;
 
@@ -20,7 +19,7 @@ class CommentController extends Controller
         $this->topicCommentService = $topicCommentService;
     }
 
-    public function store(StoreTopicComment $request)
+    public function store(StoreTopicCommentRequest $request)
     {
         $this->topicCommentService->store($request->all());
 

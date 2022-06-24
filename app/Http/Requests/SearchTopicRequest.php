@@ -2,24 +2,17 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Topic;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTopic extends FormRequest
+class SearchTopicRequest extends FormRequest
 {
-    protected $redirect = '/';
-
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {/*
-        $topic = Topic::find($this->route('id'));
-
-        return $topic && $this->user()->id == $topic->user_id; */
-
+    {
         return true;
     }
 
@@ -31,8 +24,7 @@ class UpdateTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string',
-            'text' => 'nullable|string'
+            'name' => 'string'
         ];
     }
 }

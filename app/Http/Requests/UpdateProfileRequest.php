@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchTopic extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +14,9 @@ class SearchTopic extends FormRequest
      */
     public function authorize()
     {
+        /* $user = User::find($this->route('id'));
+
+        return $this->user()->id == $user->id; */
         return true;
     }
 
@@ -24,7 +28,8 @@ class SearchTopic extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string'
+            'name' => 'nullable|string|min:8',
+            'avatar' => 'nullable|file|mimes:png,jpg,jpeg'
         ];
     }
 }

@@ -6,9 +6,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailRequest;
-use App\Http\Requests\TokenRequest;
 use App\Http\Requests\UpdatePasswordRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;

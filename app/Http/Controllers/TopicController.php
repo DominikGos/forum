@@ -2,21 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Controllers\Topic;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller as BasicController;
-use App\Http\Requests\SearchTopic;
-use App\Http\Requests\StoreTopic;
-use App\Http\Requests\UpdateTopic;
-use App\Models\File;
+use App\Http\Requests\SearchTopicRequest;
+use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 use App\Models\Topic;
 use App\Services\TopicCommentService;
 use App\Services\TopicService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class Controller extends BasicController
+class TopicController extends BasicController
 {
     private TopicService $topicService;
     private TopicCommentService $topicCommentService;
@@ -67,7 +65,7 @@ class Controller extends BasicController
         return view('topic.edit', ['topic' => $topic]);
     }
 
-    public function update(UpdateTopic $request, int $id)
+    public function update(UpdateTopicRequest $request, int $id)
     {
         Gate::authorize(
             'update-topic',
@@ -86,7 +84,7 @@ class Controller extends BasicController
         return view('topic.create');
     }
 
-    public function store(StoreTopic $request)
+    public function store(StoreTopicRequest $request)
     {
         $this->topicService->store($request->all());
 
@@ -114,7 +112,7 @@ class Controller extends BasicController
             ->with('topic-delete-success', 'Topic has been removed successful');
     }
 
-    public function search(SearchTopic $request)
+    public function search(SearchTopicRequest $request)
     {
         $searchedTopicName = $request->name;
 

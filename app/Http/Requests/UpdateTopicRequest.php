@@ -2,21 +2,24 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
+use App\Models\Topic;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfile extends FormRequest
+class UpdateTopicRequest extends FormRequest
 {
+    protected $redirect = '/';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        /* $user = User::find($this->route('id'));
+    {/*
+        $topic = Topic::find($this->route('id'));
 
-        return $this->user()->id == $user->id; */
+        return $topic && $this->user()->id == $topic->user_id; */
+
         return true;
     }
 
@@ -28,8 +31,8 @@ class UpdateProfile extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string|min:8',
-            'avatar' => 'nullable|file|mimes:png,jpg,jpeg'
+            'name' => 'nullable|string',
+            'text' => 'nullable|string'
         ];
     }
 }

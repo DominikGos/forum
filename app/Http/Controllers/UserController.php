@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateProfile;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -49,7 +51,7 @@ class UserController extends Controller
         return view('user.edit', ['user' => $user]);
     }
 
-    public function update(UpdateProfile $request, int $id)
+    public function update(UpdateProfileRequest $request, int $id)
     {
         Gate::authorize(
             'userUpdate',
