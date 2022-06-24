@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forum;
 
+use App\Models\File;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,15 +60,20 @@ class TopicTest extends TestCase
             ->for($user)
             ->create();
 
+        //$file = UploadedFile::fake()->image('fakeimage.jpg');
+
         $response = $this->actingAs($user)
             ->post(route('topic.store', [
                 'user_id' => $user->id,
                 'name' => $topic->name,
                 'text' => $topic->text,
+                //'files[]' => [$file]
             ]));
 
         $response->assertRedirect(route('home'))
             ->assertSessionHas('topic-create-success');
+
+        //Storage::assertExists('topic/'. $file->hashName());
     }
 
     public function test_user_cannot_create_topic_with_incorrect_credentials(): void
@@ -150,8 +156,6 @@ class TopicTest extends TestCase
             ->for($user)
             ->make(['id' => $topic->id]);
 
-        //dd($updatedTopic);
-
         $response = $this->actingAs($user)->put(
             route('topic.update', ['id' => $topic->id]),
             [
@@ -201,3 +205,4 @@ class TopicTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 }
+

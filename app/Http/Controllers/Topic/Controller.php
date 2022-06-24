@@ -96,6 +96,7 @@ class Controller extends BasicController
 
     public function store(StoreTopic $request)
     {
+        //dd($request);
         $this->topicService->store($request->all());
 
         return redirect()->route('home')->with('topic-create-success', 'The thread has been created successful');

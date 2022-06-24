@@ -7,6 +7,8 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -45,17 +47,22 @@ class UserTest extends TestCase
 
         $updatedUser = User::factory()->make();
 
+        $avatar = UploadedFile::fake()->image('avatar.jpg');
+
         $response = $this->actingAs($user)
             ->put(
                 route('user.update', ['id' => $user->id]),
                 [
                     'name' => $updatedUser->name,
+                    'avatar' => $avatar
                 ]
             );
 
         $response->assertRedirect(route('user.get', ['id' => $user->id]))
             ->assertSessionHas('profile-update-success')
             ->assertSessionHasNoErrors();
+
+        Storage::assertExists('avatar/'. $avatar->hashName());
     }
 
     public function test_user_cannot_update_not_his_profile()
