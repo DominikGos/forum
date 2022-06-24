@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Topic;
+use App\Models\TopicComment;
 use App\Models\User;
+use App\Policies\TopicCommentPolicy;
+use App\Policies\TopicPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -18,7 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        User::class => UserPolicy::class
+        User::class => UserPolicy::class,
+        Topic::class => TopicPolicy::class,
+        TopicComment::class => TopicCommentPolicy::class,
     ];
 
     /**
@@ -29,16 +34,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('delete-topic', function(User $user, Topic $topic) {
-            return $user->id == $topic->user_id
-                            ? Response::allow()
-                            : Response::deny('You must be an administrator.');
-        });
-
-        Gate::define('update-topic', function(User $user, Topic $topic) {
-            return $user->id == $topic->user_id;
-        });
 
         ResetPassword::createUrlUsing(function ($user, string $token) {
             return route('password.reset.form', ['token' => $token]);

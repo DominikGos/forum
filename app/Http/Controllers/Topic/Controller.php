@@ -60,7 +60,7 @@ class Controller extends BasicController
     public function edit(int $id)
     {
         Gate::authorize(
-            'update-topic',
+            'updateTopic',
             $topic = Topic::find($id)
         );
 
@@ -96,7 +96,7 @@ class Controller extends BasicController
     public function destroy(int $id)
     {
         Gate::authorize(
-            'delete-topic',
+            'deleteTopic',
             $topic = Topic::find($id)
         );
 

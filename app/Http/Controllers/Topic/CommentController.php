@@ -9,6 +9,7 @@ use App\Http\Requests\DestroyTopicComment;
 use App\Http\Requests\StoreTopicComment;
 use App\Models\TopicComment;
 use App\Services\TopicCommentService;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -27,9 +28,12 @@ class CommentController extends Controller
             ->with('comment-create-success', 'Comment has been created successful');
     }
 
-    public function destroy(DestroyTopicComment $request, int $id)
+    public function destroy(int $id)
     {
-        $topicComment = TopicComment::find($id);
+        Gate::authorize(
+            'deleteTopicComment',
+            $topicComment = TopicComment::find($id)
+        );
 
         if($topicComment)
         {

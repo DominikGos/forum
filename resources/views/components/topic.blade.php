@@ -59,7 +59,7 @@
                 </a>
             @endif
 
-            @canany(['delete-topic', 'update-topic'], $topic)
+            @canany(['deleteTopic', 'updateTopic'], $topic)
                 <a href="{{ route('topic.edit', ['id' => $topic->id]) }}" class="btn btn-primary">
                     Edit
                 </a>
