@@ -14,11 +14,6 @@ use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
-    public function forgotPasswordForm()
-    {
-        return view('authentication.forgot-password');
-    }
-
     public function resetLink(EmailRequest $request)
     {
         $status = Password::sendResetLink(

@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function showForm()
-    {
-        return view('authentication.login');
-    }
-
     public function authenticate(LoginRequest $request)
     {
         $data = [

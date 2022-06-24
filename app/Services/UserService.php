@@ -13,6 +13,8 @@ class UserService
         'threads' => 'threads',
         'comments' => 'comments'
     ];
+    
+    private const AVATAR_PATH = 'avatar';
 
     public function userPostedResourcesName(?string $resourcesName): string
     {
@@ -21,17 +23,32 @@ class UserService
                     : self::$availableUserPostedResources['threads'];
     }
 
-    public function userPostedResources(string $resourcesName, int $userId): Collection
+    public function userPostedResources(string $resourcesName, User $user): Collection
     {
         switch ($resourcesName) {
             case self::$availableUserPostedResources['threads']:
-                return User::find($userId)->topics;
+                return $user->topics;
                 break;
 
             case self::$availableUserPostedResources['comments']:
-                return TopicComment::where('user_id', $userId)->get();
+                return TopicComment::where('user_id', $user->id)->get();
                 break;
         }
+    }
 
+    public function update(array $data, User $user)
+    {
+        if( ! empty($data['avatar'])) {
+            $avatarPath = $data['avatar']->store(self::AVATAR_PATH);
+        }
+
+        if( ! empty($data['deleteAvatar']) && $user->avatar) {
+            $user->avatar = null;
+        }
+
+        $user->name = $data['name'] ?? $user->name;
+        $user->avatar = $avatarPath ?? $user->avatar;
+
+        $user->save();
     }
 }

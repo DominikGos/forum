@@ -53,7 +53,7 @@ Route::group([
 
         Route::put('{id}/update', 'TopicController@update')->name('update');
 
-        Route::get('create', 'TopicController@create')->name('create');
+        Route::view('create', 'topic.create')->name('create');
 
         Route::post('create', 'TopicController@store')->name('store');
 
@@ -74,15 +74,15 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Authentication',
     'middleware' => RedirectIfAuthenticated::class
 ], function() {
-    Route::get('/login', 'LoginController@showForm')->name('login.form');
+    Route::view('/login', 'authentication.login')->name('login.form');
 
     Route::post('/login', 'LoginController@authenticate')->name('login');
 
-    Route::get('/register', 'RegisterController@showForm')->name('register.form');
+    Route::view('/register', 'authentication.register')->name('register.form');
 
     Route::post('/register', 'RegisterController@register')->name('register');
 
-    Route::get('/forgot-password', 'ResetPasswordController@forgotPasswordForm')->name('password.request');
+    Route::view('/forgot-password', 'authentication.forgot-password')->name('password.request');
 
     Route::post('/forgot-password', 'ResetPasswordController@resetLink')->name('password.reset.link');
 

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Gate;
 class UserController extends Controller
 {
     private UserService $userService;
-    private const AVATAR_PATH = 'avatar';
 
     public function __construct(UserService $userService)
     {
@@ -31,7 +30,7 @@ class UserController extends Controller
         {
             $userPostedResourcesName = $this->userService->userPostedResourcesName($request->get('data-to-display'));
 
-            $userPostedResources = $this->userService->userPostedResources($userPostedResourcesName, $id);
+            $userPostedResources = $this->userService->userPostedResources($userPostedResourcesName, $user);
         }
 
         return view('user.get', [
@@ -58,18 +57,7 @@ class UserController extends Controller
             $user = User::find($id)
         );
 
-        if($request->avatar) {
-            $avatarPath = $request->file('avatar')->store(self::AVATAR_PATH);
-        }
-
-        if($request->deleteAvatar && $user->avatar) {
-            $user->avatar = null;
-        }
-
-        $user->name = $request->name ?? $user->name;
-        $user->avatar = $avatarPath ?? $user->avatar;
-
-        $user->save();
+        $this->userService->update($request->all(), $user);
 
         return redirect()
             ->route('user.get', ['id' => $user->id])

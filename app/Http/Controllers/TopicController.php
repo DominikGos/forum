@@ -18,7 +18,7 @@ class TopicController extends BasicController
 {
     private TopicService $topicService;
     private TopicCommentService $topicCommentService;
-    private static  $topicsPerPage = 10;
+    private const TOPICS_PER_PAGE = 10;
 
     public function __construct(TopicService $topicService, TopicCommentService $topicCommentService)
     {
@@ -31,7 +31,7 @@ class TopicController extends BasicController
         $topics = Topic::orderBy(
             'id',
             $this->topicService->listSequence($request->get('sequence'))
-        )->paginate(self::$topicsPerPage);
+        )->paginate(self::TOPICS_PER_PAGE);
 
         return view('topic.list', [
             'topics' => $topics,
@@ -79,11 +79,6 @@ class TopicController extends BasicController
             ->with('topic-update-success', 'Topic has been updated successful.');
     }
 
-    public function create()
-    {
-        return view('topic.create');
-    }
-
     public function store(StoreTopicRequest $request)
     {
         $this->topicService->store($request->all());
@@ -118,7 +113,7 @@ class TopicController extends BasicController
 
         $topics = [];
 
-        $topics = Topic::where('name', 'like', "%$searchedTopicName%")->paginate(self::$topicsPerPage);
+        $topics = Topic::where('name', 'like', "%$searchedTopicName%")->paginate(self::TOPICS_PER_PAGE);
 
         return view('topic.list', [
             'topics' => $topics,

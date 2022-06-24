@@ -22,9 +22,4 @@ class RegisterController extends Controller
 
         return redirect()->route('login.form')->with('register-success', 'User registration complete');
     }
-
-    public function showForm()
-    {
-        return view('authentication.register');
-    }
 }
