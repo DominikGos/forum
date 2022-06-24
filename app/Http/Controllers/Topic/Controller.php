@@ -20,6 +20,7 @@ class Controller extends BasicController
 {
     private TopicService $topicService;
     private TopicCommentService $topicCommentService;
+    private static  $topicsPerPage = 10;
 
     public function __construct(TopicService $topicService, TopicCommentService $topicCommentService)
     {
@@ -32,7 +33,7 @@ class Controller extends BasicController
         $topics = Topic::orderBy(
             'id',
             $this->topicService->listSequence($request->get('sequence'))
-        )->get();
+        )->paginate(self::$topicsPerPage);
 
         return view('topic.list', [
             'topics' => $topics,
@@ -74,21 +75,6 @@ class Controller extends BasicController
         );
 
         $this->topicService->update($topic, $request->all());
-        
-       /*  if($topic->files->isNotEmpty() && $request->fileToDeleteIds) {
-            $this->topicService->destroyFiles(File::whereIn('id', $request->fileToDeleteIds)->get());
-        }
-
-        if($request->file('files')) {
-            $this->topicService->storeFiles($request->file('files'), $id);
-        }
-
-        $topic->name = $request->name ?? $topic->name;
-        $topic->text = $request->text ?? $topic->text;
-        $topic->updated = true;
-        $topic->updated_at = Carbon::now();
-
-        $topic->save(); */
 
         return redirect()
             ->route('topic.get', ['id' => $id])
@@ -134,7 +120,7 @@ class Controller extends BasicController
 
         $topics = [];
 
-        $topics = Topic::where('name', 'like', "%$searchedTopicName%")->get();
+        $topics = Topic::where('name', 'like', "%$searchedTopicName%")->paginate(self::$topicsPerPage);
 
         return view('topic.list', [
             'topics' => $topics,

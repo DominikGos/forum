@@ -12,14 +12,14 @@ abstract class ForumService
 {
     abstract public function store(array $data);
 
-    public function destroyForumResource(object $forumResource)
+    final public function destroyForumResource(object $forumResource)
     {
         $this->destroyFiles($forumResource->files);
 
         $forumResource->delete();
     }
 
-    public function destroyFiles(Collection $files)
+    final public function destroyFiles(Collection $files)
     {
         $filesPaths = array_column($files->toArray(), 'path');
 
