@@ -63,7 +63,7 @@
                 <a href="{{ route('topic.edit', ['id' => $topic->id]) }}" class="btn btn-primary">
                     Edit
                 </a>
-                <form
+                {{-- <form
                     action="{{ route('topic.destroy', ['id' => $topic->id]) }}"
                     method="POST"
                 >
@@ -75,7 +75,7 @@
                     <button type="submit" class="btn btn-danger">
                         Delete
                     </button>
-                </form>
+                </form> --}}
             @endcan
 
         </div>
