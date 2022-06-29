@@ -51,7 +51,7 @@
 
                 </div>
                 <div class="mb-3">
-                    <a href="{{ route('password.request')}}" class="">Forgot your password?</a>
+                    <a href="{{ route('forgot.pasword.form')}}" class="">Forgot your password?</a>
 
                     @error('rememberMe')
                         <div class="invalid-feedback">

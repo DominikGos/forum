@@ -82,9 +82,9 @@ Route::group([
 
     Route::post('/register', 'RegisterController@register')->name('register');
 
-    Route::view('/forgot-password', 'authentication.forgot-password')->name('password.request');
+    Route::view('/forgot-password', 'authentication.forgot-password')->name('forgot.pasword.form');
 
-    Route::post('/forgot-password', 'ResetPasswordController@resetLink')->name('password.reset.link');
+    Route::post('/forgot-password', 'ResetPasswordController@resetLink')->name('forgot.pasword');
 
     Route::get('/reset-password/{token}', 'ResetPasswordController@resetPasswordForm')->name('password.reset.form');
 

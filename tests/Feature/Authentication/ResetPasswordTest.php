@@ -15,7 +15,7 @@ class ResetPasswordTest extends TestCase
 
     public function test_user_can_view_forgot_password_form_view()
     {
-        $response = $this->get(route('password.request'));
+        $response = $this->get(route('forgot.pasword.form'));
 
         $response->assertViewIs('authentication.forgot-password');
     }
@@ -24,14 +24,14 @@ class ResetPasswordTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post(route('password.reset.link', ['email' => $user->email]));
+        $response = $this->post(route('forgot.pasword', ['email' => $user->email]));
 
         $response->assertSessionHasNoErrors()->assertSessionHas('status');
     }
 
     public function test_user_get_failed_status_for_send_bad_email_in_forgot_password_form()
     {
-        $response = $this->post(route('password.reset.link', ['email' => null]));
+        $response = $this->post(route('forgot.pasword', ['email' => null]));
 
         $response->assertSessionHasErrors();
     }

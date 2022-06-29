@@ -12,7 +12,7 @@
                 </div>
 
             @endif
-            <form class="w-100 mb-5" method="POST" action="{{ route('password.reset.link') }}">
+            <form class="w-100 mb-5" method="POST" action="{{ route('forgot.pasword') }}">
 
                 @csrf
 
