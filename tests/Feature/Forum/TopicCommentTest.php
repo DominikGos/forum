@@ -9,6 +9,8 @@ use App\Models\TopicComment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TopicCommentTest extends TestCase
@@ -17,6 +19,10 @@ class TopicCommentTest extends TestCase
 
     public function test_user_can_create_topic_comment_with_correct_credentials()
     {
+        Storage::fake('local');
+
+        $file = UploadedFile::fake()->image('topic-comment-image');
+
         $user = User::factory()->create();
 
         $topic = Topic::factory()
@@ -30,14 +36,17 @@ class TopicCommentTest extends TestCase
             ]);
 
         $response = $this->actingAs($user)
-            ->post(route('topic.comment.store', [
+            ->post(route('topic.comment.store'), [
                 'topic_id' => $topic->id,
-                'text' => $topicComment->text
-            ]));
+                'text' => $topicComment->text,
+                'files' => [$file]
+            ]);
 
         $response->assertRedirect(route('topic.get', ['id' => $topic->id]))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('comment-create-success');
+
+        Storage::disk('local')->assertExists('topic-comment/' . $file->hashName());
     }
 
     public function test_user_can_delete_own_comment(): void

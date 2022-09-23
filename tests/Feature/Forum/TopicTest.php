@@ -17,7 +17,7 @@ class TopicTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_get_all_topics(): void
+    public function test_user_can_get_all_topics()
     {
         $response = $this->get(route('home'));
 
@@ -26,7 +26,7 @@ class TopicTest extends TestCase
             ->assertViewHas(['topics', 'numberOfTopics']);
     }
 
-    public function test_user_can_get_topic(): void
+    public function test_user_can_get_topic()
     {
         $user = User::factory()->create();
 
@@ -41,7 +41,7 @@ class TopicTest extends TestCase
             ->assertViewHasAll(['topic', 'numberOfComments']);
     }
 
-    public function test_user_can_view_create_topic_form(): void
+    public function test_user_can_view_create_topic_form()
     {
         $user = User::factory()->create();
 
@@ -52,31 +52,34 @@ class TopicTest extends TestCase
             ->assertViewIs('topic.create');
     }
 
-    public function test_user_can_create_topic_with_correct_credentials(): void
+    public function test_user_can_create_topic_with_correct_credentials()
     {
+        Storage::fake('local');
+
+        $file = UploadedFile::fake()->image('topic-image.jpg');
+
         $user = User::factory()->create();
 
         $topic = Topic::factory()
             ->for($user)
             ->create();
 
-        //$file = UploadedFile::fake()->image('fakeimage.jpg');
 
         $response = $this->actingAs($user)
-            ->post(route('topic.store', [
+            ->post(route('topic.store'), [
                 'user_id' => $user->id,
                 'name' => $topic->name,
                 'text' => $topic->text,
-                //'files[]' => [$file]
-            ]));
+                'files' => [$file]
+            ]);
 
         $response->assertRedirect(route('home'))
             ->assertSessionHas('topic-create-success');
 
-        //Storage::assertExists('topic/'. $file->hashName());
+        Storage::disk('local')->assertExists('topic/' . $file->hashName());
     }
 
-    public function test_user_cannot_create_topic_with_incorrect_credentials(): void
+    public function test_user_cannot_create_topic_with_incorrect_credentials()
     {
         $user = User::factory()->create();
 
@@ -90,7 +93,7 @@ class TopicTest extends TestCase
             ->assertSessionHasErrors('name');
     }
 
-    public function test_user_can_delete_own_topic(): void
+    public function test_user_can_delete_own_topic()
     {
         $user = User::factory()->create();
 
@@ -108,7 +111,7 @@ class TopicTest extends TestCase
             ->assertSessionHas(['topic-delete-success']);
     }
 
-    public function test_unauthorized_user_cannot_delete_not_his_topic(): void
+    public function test_unauthorized_user_cannot_delete_not_his_topic()
     {
         $firstUser = User::factory()->create();
 

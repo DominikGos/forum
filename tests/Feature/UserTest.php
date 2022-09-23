@@ -43,11 +43,13 @@ class UserTest extends TestCase
 
     public function test_user_can_update_own_profile()
     {
+        Storage::fake('local');
+
+        $avatar = UploadedFile::fake()->image('avatar.jpg');
+
         $user = User::factory()->create();
 
         $updatedUser = User::factory()->make();
-
-        $avatar = UploadedFile::fake()->image('avatar.jpg');
 
         $response = $this->actingAs($user)
             ->put(
@@ -62,7 +64,7 @@ class UserTest extends TestCase
             ->assertSessionHas('profile-update-success')
             ->assertSessionHasNoErrors();
 
-        Storage::assertExists('avatar/'. $avatar->hashName());
+        Storage::disk('local')->assertExists('avatar/'. $avatar->hashName());
     }
 
     public function test_user_cannot_update_not_his_profile()
