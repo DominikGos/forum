@@ -47,9 +47,4 @@ class User extends Authenticatable
     public function topics() {
         return $this->hasMany(Topic::class);
     }
-
-    public function userRoles()
-    {
-        return $this->hasMany(UserRole::class);
-    }
 }

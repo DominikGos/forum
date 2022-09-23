@@ -12,11 +12,8 @@ class UserPolicy
     use HandlesAuthorization;
 
     public function userList(User $user) {
-        $userRoles = array_column($user->userRoles->toArray(), 'role');
 
-        return in_array('admin', $userRoles)
-                    ? Response::allow()
-                    : Response::deny('You must be an administrator.');
+        return true;
     }
 
     public function userUpdate(User $authenticated, User $user)
