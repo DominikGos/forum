@@ -35,7 +35,7 @@ class TopicController extends BasicController
 
         return view('topic.list', [
             'topics' => $topics,
-            'numberOfTopics' => count((array) $topics)
+            'numberOfTopics' => $topics->count()
         ]);
     }
 
